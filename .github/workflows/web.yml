@@ -1,0 +1,29 @@
+name: web
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "web/**"
+  workflow_dispatch:
+    
+jobs:
+  build:
+    uses: Implex1v/NSCTool/.github/workflows/_build.yml@main
+    with:
+      component: web
+    secrets:
+      cr: ${{ secrets.CR_HOST }}
+      cr_token: ${{ secrets.CR_TOKEN }}
+      cr_user: ${{ secrets.CR_USER }}
+
+  deploy:
+    uses: Implex1v/NSCTool/.github/workflows/_deploy.yml@main
+    needs: ["build"]
+    with:
+      stage: dev
+    secrets:
+      ssh_priv_key: ${{ secrets.SERVER_SSH_DEV }}
+      slack_webhook: ${{ secrets.SLACK_GITHUB_DEV }}
+      host: ${{ secrets.APP_HOST_DEV }}
+      cr: ${{ secrets.CR_HOST }}
