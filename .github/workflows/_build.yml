@@ -1,0 +1,66 @@
+name: _build
+
+on:
+  workflow_call:
+    inputs:
+      component:
+        description: The component to build
+        type: string
+        required: true
+    secrets:
+      cr:
+        description: The container registry to use (default is GitHub)
+        required: true
+      cr_token:
+        description: The container registry token
+        required: true
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  COMPONENT: ${{ inputs.component }}
+
+jobs:
+  version:
+    runs-on: ubuntu-20.04
+    outputs:
+      semver: ${{ steps.gitversion.outputs.semVer }}
+    steps:
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0.9.7
+        with:
+          versionSpec: "5.x"
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # For gitversion
+      # https://github.com/GitTools/actions/blob/main/docs/examples/github/gitversion/index.md
+      - id: gitversion
+        name: Determine Version
+        uses: gittools/actions/gitversion/execute@v0.9.7
+        with:
+          useConfigFile: true
+
+  build:
+    runs-on: ubuntu-20.04
+    needs: version
+    env:
+      CR_BASE: "${{ inputs.cr }}/${{ github.repository }}"
+      GITVERSION_SEMVER: ${{ needs.version.outputs.semver }}
+      GIT_COMMIT: ${{ github.sha }}
+      BUILD_VERSION: ${{ needs.version.outputs.semver }}
+    steps:
+      #------
+      - uses: actions/checkout@v3
+      - id: build
+        name: Build container image
+        run: |
+          echo ${{ secrets.crToken }} | docker login ${{ inputs.cr }} -u ${{ github.actor }} --password-stdin
+          docker-compose build ${COMPONENT}
+          docker-compose push ${COMPONENT}
+      - name: Retag to latest and push image
+        run: |
+          docker tag ${CR_BASE}/${COMPONENT}:${BUILD_VERSION} ${CR_BASE}/${COMPONENT}:latest
+          docker push ${CR_BASE}/${COMPONENT}:latest
+      

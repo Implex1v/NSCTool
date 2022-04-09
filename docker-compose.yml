@@ -1,0 +1,22 @@
+version: "3.7"
+
+x-buildargs: &build_args
+  GIT_COMMIT: ${GIT_COMMIT:-'git-commit'}
+  BUILD_VERSION: ${GITVERSION_SEMVER:-'semver'}
+
+services:
+  web:
+    image: ${CR_BASE:-local}/web:${GITVERSION_SEMVER:-latest}
+    build:
+      context: ./web/
+      args:
+        <<: *build_args
+    ports: ["7080:80"]
+
+  api:
+    image: ${CR_BASE:-local}/api:${GITVERSION_SEMVER:-latest}
+    build: 
+      context: ./api/
+      args:
+        <<: *build_args
+    ports: ["7090:80"]

@@ -1,0 +1,53 @@
+name: _deploy
+
+on:
+  workflow_call:
+    inputs:
+      stage:
+        description: The stage to deploy to
+        required: false
+        type: string
+        default: dev
+    secrets:
+      ssh_priv_key:
+        description: The private ssh key to connect to the host
+        required: true
+      slack_webhook:
+        description: The wslack webhook used for notifications
+        required: true
+      host:
+        description: The host to deploy to
+        required: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v3
+    - name: Run playbook
+      uses: dawidd6/action-ansible-playbook@v2
+      with:
+        playbook: playbooks/update.yml
+        directory: ./_devops/ansible
+        requirements: requirements.yml
+        # Optional, SSH private key of the machine
+        key: ${{ secrets.ssh_priv_key }}
+        # Optional, literal inventory file contents
+        inventory: |
+          [all]
+          ${{ secrets.host }}
+  
+  slack:
+    runs-on: ubuntu-20.04
+    needs: ["deploy"]
+    if: always() && needs.deploy.result == 'failure'
+    steps:
+    - name: notify
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_WEBHOOK: ${{ secrets.slack_webhook }}
+        SLACK_USERNAME: GitHub
+        SLACK_MESSAGE: "Failed to deploy NSCTool on ${{ inputs.stage }} :cry: :pray:."
+        SLACK_TITLE: Deployment failed
+        SLACK_ICON: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+        SLACK_COLOR: ${{ needs.deploy.result }}
