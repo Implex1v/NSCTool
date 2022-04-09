@@ -26,3 +26,4 @@ jobs:
       ssh_priv_key: ${{ secrets.SERVER_SSH_DEV }}
       slack_webhook: ${{ secrets.SLACK_GITHUB_DEV }}
       host: ${{ secrets.APP_HOST_DEV }}
+      cr: ${{ secrets.CR_HOST }}

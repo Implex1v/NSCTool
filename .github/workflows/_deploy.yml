@@ -18,6 +18,9 @@ on:
       host:
         description: The host to deploy to
         required: true
+      cr:
+        description: The cr host
+        required: true
 
 jobs:
   deploy:
@@ -35,7 +38,7 @@ jobs:
         # Optional, literal inventory file contents
         inventory: |
           [all]
-          ${{ secrets.host }}
+          ${{ secrets.host }} cr_base=${{ secrets.cr }}/nsctool
   
   slack:
     runs-on: ubuntu-20.04
