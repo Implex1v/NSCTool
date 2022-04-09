@@ -1,0 +1,41 @@
+---
+# This playbook restarts and updates the running services
+
+- hosts: all
+  remote_user: root
+  tasks:
+    - name: Copy docker compose files
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "{{ workingdir }}/"
+      with_items: 
+      - "{{ playbook_dir }}/../../../docker-compose.yml"
+      - "{{ playbook_dir }}/../../../docker-compose.override.yml"
+
+    # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/template_module.html
+    - name: Template and copy env file
+      ansible.builtin.template:
+        src: "{{ playbook_dir }}/../templates/.env.j2"
+        dest: "{{ workingdir }}/.env"
+
+    # https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_module.html
+    - name: Tear down existing services
+      community.docker.docker_compose:
+        project_src: "{{ workingdir }}"
+        debug: yes
+        state: absent  
+
+    - name: Pull newer images
+      community.docker.docker_compose:
+        project_src: "{{ workingdir }}"
+        state: present
+        pull: yes  
+    
+    - name: Start services again
+      community.docker.docker_compose:
+        project_src: "{{ workingdir }}"
+        build: no
+      register: output
+
+    - ansible.builtin.debug:
+        var: output

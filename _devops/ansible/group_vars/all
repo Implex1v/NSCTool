@@ -1,0 +1,2 @@
+# Global configuration files for all server
+workingdir: /opt/docker/nsctool
