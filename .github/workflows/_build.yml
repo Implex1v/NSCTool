@@ -14,6 +14,9 @@ on:
       cr_token:
         description: The container registry token
         required: true
+      cr_user:
+        description: The registry user
+        required: true
 
 defaults:
   run:
@@ -46,7 +49,7 @@ jobs:
     runs-on: ubuntu-20.04
     needs: version
     env:
-      CR_BASE: "${{ inputs.cr }}/${{ github.repository }}"
+      CR_BASE: "${{ secrets.cr }}/nsctool"
       GITVERSION_SEMVER: ${{ needs.version.outputs.semver }}
       GIT_COMMIT: ${{ github.sha }}
       BUILD_VERSION: ${{ needs.version.outputs.semver }}
@@ -56,7 +59,7 @@ jobs:
       - id: build
         name: Build container image
         run: |
-          echo ${{ secrets.crToken }} | docker login ${{ inputs.cr }} -u ${{ github.actor }} --password-stdin
+          echo ${{ secrets.cr_token }} | docker login ${{ secrets.cr }} -u ${{ secrets.cr_user }} --password-stdin
           docker-compose build ${COMPONENT}
           docker-compose push ${COMPONENT}
       - name: Retag to latest and push image
