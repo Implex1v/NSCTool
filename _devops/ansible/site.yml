@@ -1,4 +1,0 @@
----
-- hosts: remote_servers
-  roles:
-  - role: update

@@ -2,7 +2,7 @@
 # This playbook restarts and updates the running services
 
 - hosts: all
-  remote_user: root
+  remote_user: ansible
   tasks:
     - name: Copy docker compose files
       ansible.builtin.copy:
