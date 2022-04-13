@@ -11,12 +11,9 @@ jobs:
   plantuml:
     runs-on: ubuntu-20.04
     steps:
-      - name: install plantuml
-        run: sudo apt install -y plantuml
       - uses: actions/checkout@v3
       - name: Update plantuml files
-        working-directory: _docs
-        run: ./plantuml.sh
+        run: ./_docs/plantuml.sh
       - name: Commit changes if any
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
