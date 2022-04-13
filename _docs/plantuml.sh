@@ -1,4 +1,4 @@
 #!/bin/bash
 DIRS=$(find . -type d | paste -s -d" " -)
-plantuml -r $DIRS
+plantuml -r -v $DIRS
 
