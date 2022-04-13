@@ -1,9 +1,9 @@
 @startuml system-context
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
 
-Person(personAlias, "Label", "Optional Description")
-Container(containerAlias, "Label", "Technology", "Optional Description")
-System(systemAlias, "Label", "Optional Description")
+Person(personAlias, "Label", "Lorem Ipsum")
+Container(containerAlias, "Label", "Technology", "Lorem Ipsum")
+System(systemAlias, "Label", "Lorem Ipsum")
 
 Rel(personAlias, containerAlias, "Label", "Optional Technology")
 @enduml
