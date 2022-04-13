@@ -1,10 +1,7 @@
 version: "3.7"
 
 services:
-  web:
-    environment:
-      - name=value
-
-  api:
-    environment:
-      - name=value
+  plantuml:
+    image: plantuml/plantuml-server:v1.2022.4
+    ports:
+      - "5050:8080"

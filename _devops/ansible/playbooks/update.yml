@@ -10,7 +10,7 @@
         dest: "{{ workingdir }}/"
       with_items: 
       - "{{ playbook_dir }}/../../../docker-compose.yml"
-      - "{{ playbook_dir }}/../../../docker-compose.override.yml"
+      # - "{{ playbook_dir }}/../../../docker-compose.override.yml" We don't want to deploy plantuml
 
     # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/template_module.html
     - name: Template and copy env file
