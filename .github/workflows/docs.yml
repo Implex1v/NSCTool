@@ -1,0 +1,32 @@
+name: _docs
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "_docs/**"
+  workflow_dispatch:
+    
+jobs:
+  plantuml:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: install plantuml
+        run: sudo apt install -y plantuml
+      - uses: actions/checkout@v3
+      - name: Update plantuml files
+        working-directory: _docs
+        run: ./plantuml.sh
+      - name: Commit changes if any
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: (_docs) (generated) Update puml diagrams
+          file_pattern: _docs/**/*.png
+          # Optional commit user and author settings
+          commit_user_name: Implex1v Bot # defaults to "github-actions[bot]"
+          commit_user_email: implex1v@gmail.com # defaults to "github-actions[bot]@users.noreply.github.com"
+          # Optional. Option used by `git-status` to determine if the repository is 
+          # dirty. See https://git-scm.com/docs/git-status#_options
+          status_options: '--untracked-files=no'
+
+  
