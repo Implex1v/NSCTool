@@ -22,8 +22,7 @@ jobs:
           commit_message: (_docs) (generated) Update puml diagrams
           file_pattern: _docs/**/*.png
           # Optional commit user and author settings
-          commit_user_name: Implex1v Bot # defaults to "github-actions[bot]"
-          commit_user_email: implex1v@gmail.com # defaults to "github-actions[bot]@users.noreply.github.com"
+          commit_user_name: PlantUML Bot
           # Optional. Option used by `git-status` to determine if the repository is 
           # dirty. See https://git-scm.com/docs/git-status#_options
           status_options: '--untracked-files=no'
