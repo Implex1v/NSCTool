@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
+      - name: Install graphviz
+        run: sudo apt-get install -y graphviz 
       - name: Update plantuml files
         run: ./_docs/plantuml.sh
       - name: Commit changes if any
