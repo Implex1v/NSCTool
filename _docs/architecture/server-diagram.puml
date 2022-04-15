@@ -1,0 +1,28 @@
+@startuml server-deployment
+skinparam monochrome true
+
+frame "Deployment server setup" {
+    node web {
+
+    }
+
+    node Server <<device>> {
+        [ingress] <<nginx>>
+        database database <<mariadb>>
+
+        node Docker <<docker>> {
+            [registry] <<container>>
+            [portainer] <<container>>
+        }
+
+        ingress -- registry : HTTP <<reverse proxy>>
+        ingress -- portainer : HTTP <<reverse proxy>>
+        registry -- portainer : docker.d
+    }
+
+    web -- ingress : HTTP
+}
+
+
+
+@enduml
