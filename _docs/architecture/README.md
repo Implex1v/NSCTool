@@ -17,4 +17,4 @@ TODO
 ## Deployment Server
 This deployment diagram illustrates the current server set-up used for deployment.
 
-![Server deployment diagram](./server-diagram.png)
+![Server deployment diagram](./server-deployment.png)

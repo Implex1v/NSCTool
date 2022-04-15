@@ -25,6 +25,3 @@ jobs:
           commit_user_name: PlantUML Bot
           # Optional. Option used by `git-status` to determine if the repository is 
           # dirty. See https://git-scm.com/docs/git-status#_options
-          status_options: '--untracked-files=no'
-
-  
