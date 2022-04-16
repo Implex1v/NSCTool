@@ -12,6 +12,12 @@ services:
       args:
         <<: *build_args
     ports: ["7080:80"]
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nsctool-web.rule=Host(`web.nsctool.${HOST:-localhost}`)"
+      - "traefik.http.routers.nsctool-web.entrypoints=web"
+    networks:
+      - "cloud"
 
   api:
     image: ${CR_BASE:-local}/api:${GITVERSION_SEMVER:-latest}
@@ -20,3 +26,13 @@ services:
       args:
         <<: *build_args
     ports: ["7090:80"]
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nsctool-api.rule=Host(`api.nsctool.${HOST:-localhost}`)"
+      - "traefik.http.routers.nsctool-api.entrypoints=web"
+    networks:
+      - "cloud"
+
+networks:
+  cloud:
+    external: true
