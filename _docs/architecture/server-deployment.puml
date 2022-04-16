@@ -1,28 +1,34 @@
 @startuml server-deployment
 skinparam monochrome true
 
-frame "Deployment server setup" {
-    node web {
-
+frame "Deployment server setup with traefik" {
+    node www {
     }
 
     node Server <<device>> {
         [ingress] <<nginx>>
-        database database <<mariadb>>
 
         node Docker <<docker>> {
             [registry] <<container>>
             [portainer] <<container>>
+            
+            node nsctool <<docker-network>> {
+                [traefik] <<container>>
+                [web] <<container>>
+                [api] <<container>>
+            }
+
+            traefik -r-> web : HTTP: web.nsctool.example.com
+            traefik --> api : HTTP: api.nsctool.example.com
         }
 
-        ingress -- registry : HTTP <<reverse proxy>>
-        ingress -- portainer : HTTP <<reverse proxy>>
-        registry -- portainer : docker.d
+        ingress -r-> traefik : <<reverse proxy>> \n HTTP: *.nsctool.example.com
+        ingress -r-> registry : <<reverse proxy>> \n HTTP: registry.example.com
+        ingress -r-> portainer : <<reverse proxy>> \n HTTP: portainer.example.com
+        registry <--> portainer : docker.d
     }
 
-    web -- ingress : HTTP
+    www -r-> ingress : HTTPS: example.com
 }
-
-
 
 @enduml
