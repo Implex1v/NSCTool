@@ -38,7 +38,7 @@ jobs:
         # Optional, literal inventory file contents
         inventory: |
           [all]
-          ${{ secrets.host }} cr_base=${{ secrets.cr }}/nsctool
+          ${{ secrets.host }} cr_base=${{ secrets.cr }}/nsctool web_host=nsctool.${{ secrets.host }}
   
   slack:
     runs-on: ubuntu-20.04

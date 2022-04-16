@@ -14,7 +14,7 @@ services:
     ports: ["7080:80"]
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.nsctool-web.rule=Host(`web.nsctool.${HOST:-localhost}`)"
+      - "traefik.http.routers.nsctool-web.rule=Host(`web.${HOST:-localhost}`)"
       - "traefik.http.routers.nsctool-web.entrypoints=web"
     networks:
       - "nsctool"
@@ -28,7 +28,7 @@ services:
     ports: ["7090:80"]
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.nsctool-api.rule=Host(`api.nsctool.${HOST:-localhost}`)"
+      - "traefik.http.routers.nsctool-api.rule=Host(`api.${HOST:-localhost}`)"
       - "traefik.http.routers.nsctool-api.entrypoints=web"
     networks:
       - "nsctool"
