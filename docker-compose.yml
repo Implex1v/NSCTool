@@ -17,7 +17,7 @@ services:
       - "traefik.http.routers.nsctool-web.rule=Host(`web.nsctool.${HOST:-localhost}`)"
       - "traefik.http.routers.nsctool-web.entrypoints=web"
     networks:
-      - "cloud"
+      - "nsctool"
 
   api:
     image: ${CR_BASE:-local}/api:${GITVERSION_SEMVER:-latest}
@@ -31,8 +31,8 @@ services:
       - "traefik.http.routers.nsctool-api.rule=Host(`api.nsctool.${HOST:-localhost}`)"
       - "traefik.http.routers.nsctool-api.entrypoints=web"
     networks:
-      - "cloud"
+      - "nsctool"
 
 networks:
-  cloud:
+  nsctool:
     external: true
