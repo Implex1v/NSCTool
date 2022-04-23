@@ -25,7 +25,7 @@ services:
       context: ./api/
       args:
         <<: *build_args
-    ports: ["7090:80"]
+    ports: ["7090:8080"]
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.nsctool-api.rule=Host(`api.${HOST:-localhost}`)"
