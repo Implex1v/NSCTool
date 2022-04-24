@@ -10,8 +10,7 @@ class WebSecurityConfig: WebSecurityConfigurerAdapter() {
         http ?: throw IllegalStateException("http security is null")
 
         http.authorizeHttpRequests()
-            .antMatchers("/health").permitAll()
-            .antMatchers("/doc/**").permitAll()
+            .antMatchers("/health", "/doc/**", "/test", "/error").permitAll()
             .anyRequest().authenticated()
     }
 }
