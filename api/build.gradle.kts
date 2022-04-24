@@ -43,6 +43,6 @@ tasks.jar {
 	archiveFileName.set("nsctool-${project.name}.jar")
 }
 
-//tasks.withType<Test> {
-//	useJUnitPlatform()
-//}
+tasks.withType<Test> {
+	useJUnitPlatform()
+}
