@@ -11,6 +11,7 @@ class WebSecurityConfig: WebSecurityConfigurerAdapter() {
 
         http.authorizeHttpRequests()
             .antMatchers("/health").permitAll()
+            .antMatchers("/doc/**").permitAll()
             .anyRequest().authenticated()
     }
 }
