@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "de.nsctool"
-version = "0.0.1"
+version = System.getenv().getOrDefault("APP_VERSION", "0.1.0")
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
@@ -26,7 +26,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-	//runtimeOnly("org.postgresql:postgresql")
+	runtimeOnly("org.postgresql:postgresql")
 	runtimeOnly("com.h2database:h2")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
