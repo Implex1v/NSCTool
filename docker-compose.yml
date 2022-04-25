@@ -28,6 +28,10 @@ services:
       args:
         <<: *build_args
     ports: ["7090:8080"]
+    environment:
+      ENV APP_DB_URL: jdbc:postgresql://db:5432/nsctool
+      ENV APP_DB_USERNAME: nsctool
+      ENV APP_DB_PASSWORD: ${API_DB_PASSWORD:-nsctool}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.nsctool-api.rule=Host(`api.${HOST:-localhost}`)"
@@ -39,6 +43,12 @@ services:
   db:
     image: postgres:14-alpine
     restart: always
+    environment:
+      POSTGRES_USER: nsctool
+      POSTGRES_PASSWORD: ${API_DB_PASSWORD:-nsctool}
+      POSTGRES_DB: nsctool
+    volumes:
+      - "/opt/docker/nsctool/db/data:/var/lib/postgresql"
     networks:
       - "db"
 

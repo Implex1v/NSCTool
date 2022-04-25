@@ -27,3 +27,4 @@ jobs:
       slack_webhook: ${{ secrets.SLACK_GITHUB_DEV }}
       host: ${{ secrets.APP_HOST_DEV }}
       cr: ${{ secrets.CR_HOST }}
+      apiDbPassword: ${{ secrets.API_DB_PASSWORD }}

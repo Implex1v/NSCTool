@@ -5,20 +5,6 @@ services:
     image: plantuml/plantuml-server:v1.2022.4
     ports:
       - "5050:8080"
-
-  db:
-    environment:
-      POSTGRES_USER: nsctool
-      POSTGRES_PASSWORD: nsctool
-      POSTGRES_DB: nsctool
-    volumes:
-      - "/opt/nsctool/db/data:/var/lib/postgresql"
-  
-  api:
-    environment:
-      ENV APP_DB_URL: jdbc:postgresql://db:5432/nsctool
-      ENV APP_DB_USERNAME: nsctool
-      ENV APP_DB_PASSWORD: nsctool
   
   db-web:
     image: dpage/pgadmin4:6

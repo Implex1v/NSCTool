@@ -18,6 +18,9 @@ on:
       host:
         description: The host to deploy to
         required: true
+      apiDbPassword:
+        description: DB password for the database
+        required: true
       cr:
         description: The cr host
         required: true
@@ -38,7 +41,7 @@ jobs:
         # Optional, literal inventory file contents
         inventory: |
           [all]
-          ${{ secrets.host }} cr_base=${{ secrets.cr }}/nsctool web_host=nsctool.${{ secrets.host }}
+          ${{ secrets.host }} cr_base=${{ secrets.cr }}/nsctool web_host=nsctool.${{ secrets.host }} api_db_password=${{ secrets.apiDbPassword }}
   
   slack:
     runs-on: ubuntu-20.04
