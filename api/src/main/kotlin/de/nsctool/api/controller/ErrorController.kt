@@ -20,7 +20,7 @@ class ErrorController(var errorAttributes: ErrorAttributes): AbstractErrorContro
         var statusCode = this.getStatus(request)
 
         if(error is RestException) {
-           statusCode = error.statusCode
+            statusCode = error.statusCode
             attrs["message"] = error.message
         }
 

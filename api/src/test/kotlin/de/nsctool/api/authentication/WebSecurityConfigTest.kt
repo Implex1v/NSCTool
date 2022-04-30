@@ -1,4 +1,4 @@
-package de.nsctool.api.security
+package de.nsctool.api.authentication
 
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
