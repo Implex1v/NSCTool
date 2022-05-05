@@ -1,6 +1,5 @@
 package de.nsctool.api.authentication
 
-import de.nsctool.api.repository.UserRepository
 import org.springframework.http.HttpHeaders
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
@@ -13,11 +12,8 @@ import javax.servlet.http.HttpServletResponse
 
 @Component
 class JwtTokenFilter(
-    private val userRepository: UserRepository,
-    private val jwtTokenUtil: JwtHandler
+    private val jwtHandler: JwtHandler
 ): OncePerRequestFilter() {
-
-
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
@@ -32,7 +28,7 @@ class JwtTokenFilter(
         val token = header.split(" ")[1].trim()
 
         try {
-            val user = jwtTokenUtil.parseToken(token)
+            val user = jwtHandler.parseToken(token)
             val auth = UsernamePasswordAuthenticationToken(user, null)
             auth.details = WebAuthenticationDetailsSource().buildDetails(request)
 
