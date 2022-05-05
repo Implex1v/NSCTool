@@ -2,6 +2,7 @@ package de.nsctool.api.authentication
 
 import org.springframework.http.HttpHeaders
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource
 import org.springframework.stereotype.Component
@@ -29,7 +30,7 @@ class JwtTokenFilter(
 
         try {
             val user = jwtHandler.parseToken(token)
-            val auth = UsernamePasswordAuthenticationToken(user, null)
+            val auth = UsernamePasswordAuthenticationToken(user, null, listOf(SimpleGrantedAuthority("admin")))
             auth.details = WebAuthenticationDetailsSource().buildDetails(request)
 
             SecurityContextHolder.getContext().authentication = auth
