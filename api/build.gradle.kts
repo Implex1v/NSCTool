@@ -10,7 +10,7 @@ plugins {
 
 group = "de.nsctool"
 version = System.getenv().getOrDefault("APP_VERSION", "0.1.0")
-java.sourceCompatibility = JavaVersion.VERSION_17
+java.sourceCompatibility = JavaVersion.VERSION_18
 
 repositories {
 	mavenCentral()
@@ -26,6 +26,11 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
+	implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
+	implementation("org.springframework.security:spring-security-config")
+//	implementation("org.springframework.security:spring-security-oauth2-jose")
+//	implementation("org.springframework.security:spring-security-oauth2-client")
+//	implementation("org.springframework.security:spring-security-oauth2-resource-server")
 	implementation("org.springdoc:springdoc-openapi-ui:1.6.8")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	//implementation("org.flywaydb:flyway-core")
@@ -47,7 +52,7 @@ dependencies {
 tasks.withType<KotlinCompile> {
 	kotlinOptions {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "17"
+		jvmTarget = "18"
 	}
 }
 

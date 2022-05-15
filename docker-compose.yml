@@ -7,7 +7,7 @@ x-buildargs: &build_args
 services:
   web:
     image: ${CR_BASE:-local}/web:${GITVERSION_SEMVER:-latest}
-    restart: always
+    restart: unless-stopped
     build:
       context: ./web/
       args:
@@ -22,7 +22,7 @@ services:
 
   api:
     image: ${CR_BASE:-local}/api:${GITVERSION_SEMVER:-latest}
-    restart: always
+    restart: unless-stopped
     build: 
       context: ./api/
       args:
@@ -42,7 +42,7 @@ services:
   
   db:
     image: postgres:14-alpine
-    restart: always
+    restart: unless-stopped
     environment:
       POSTGRES_USER: nsctool
       POSTGRES_PASSWORD: ${API_DB_PASSWORD:-nsctool}
@@ -52,8 +52,28 @@ services:
     networks:
       - "db"
 
+  keycloak:
+    image: quay.io/keycloak/keycloak:18.0
+    restart: unless-stopped
+    command:
+      - start
+      - --http-port 8180
+      - --hostname auth.${HOST:-localhost}
+      - --proxy edge
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nsctool-auth.rule=Host(`auth.${HOST:-localhost}`)"
+      - "traefik.http.routers.nsctool-auth.entrypoints=web"
+    volumes:
+      # TODO: use volume with permissions
+      - "/opt/docker/nsctool/keycloak/:/opt/keycloak/data/h2/"
+    networks:
+      - nsctool
+
 networks:
   nsctool:
     external: true
-
   db:

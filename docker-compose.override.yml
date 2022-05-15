@@ -20,3 +20,15 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@implex1v.de
       PGADMIN_DEFAULT_PASSWORD: admin
+  
+  keycloak:
+    ports:
+      - 8180:8180
+    command:
+      - start-dev
+      - --http-port 8180
+      - -Dkeycloak.migration.action=export 
+      - -Dkeycloak.migration.provider=singleFile 
+      - -Dkeycloak.migration.file=keycloak-backup.json
+    volumes:
+      - "./_data/keycloak/:/opt/keycloak/data/h2/"

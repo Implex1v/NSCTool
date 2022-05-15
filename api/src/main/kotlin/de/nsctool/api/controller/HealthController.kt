@@ -1,7 +1,8 @@
 package de.nsctool.api.controller
 
-import de.nsctool.api.model.User
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.access.annotation.Secured
+import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RestController
@@ -17,13 +18,15 @@ class HealthController {
 
     @ResponseBody
     @GetMapping("/check")
+    //@PreAuthorize("hasRole('ROLE_api-admin')")
+    @Secured(value = ["ROLE_api-user"])
     fun check(request: HttpServletRequest): Map<String, String> {
         val principal = request.getUser()
-        return mapOf("hello" to principal.userName)
+        return mapOf("hello" to principal)
     }
 }
 
-fun HttpServletRequest.getUser(): User {
-    val auth = this.userPrincipal as UsernamePasswordAuthenticationToken
-    return auth.principal as User
+fun HttpServletRequest.getUser(): String {
+    val auth = this.userPrincipal as JwtAuthenticationToken
+    return auth.name
 }
