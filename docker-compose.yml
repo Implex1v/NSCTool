@@ -28,6 +28,8 @@ services:
       args:
         <<: *build_args
     ports: ["7090:8080"]
+    volumes:
+      - "./api/build:/app/build"
     environment:
       APP_DB_URL: jdbc:postgresql://db:5432/nsctool
       APP_DB_USERNAME: nsctool

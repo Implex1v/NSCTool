@@ -2,7 +2,7 @@ FROM openjdk:17-jdk-slim AS build
 WORKDIR /app
 
 COPY . .
-RUN ./gradlew build
+RUN ./gradlew build --stacktrace
 
 FROM openjdk:17-slim AS release
 WORKDIR /app

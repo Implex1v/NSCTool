@@ -62,4 +62,10 @@ tasks.jar {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+	testLogging {
+		setEvents(listOf("failed"))
+		setExceptionFormat("full")
+		showCauses = true
+		showStackTraces = true
+	}
 }

@@ -171,3 +171,8 @@
 # End of https://www.toptal.com/developers/gitignore/api/java,linux,kotlin,intellij+all,gradle
 
 Dockerfile
+.idea/
+build/
+.gradle/
+gradle/
+!gradle/wrapper
