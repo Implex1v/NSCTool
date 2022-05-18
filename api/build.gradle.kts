@@ -10,7 +10,7 @@ plugins {
 
 group = "de.nsctool"
 version = System.getenv().getOrDefault("APP_VERSION", "0.1.0")
-java.sourceCompatibility = JavaVersion.VERSION_18
+java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
 	mavenCentral()
@@ -52,7 +52,7 @@ dependencies {
 tasks.withType<KotlinCompile> {
 	kotlinOptions {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "18"
+		jvmTarget = "17"
 	}
 }
 
