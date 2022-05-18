@@ -2,6 +2,17 @@ Architecture Documentation
 ===
 This documentation contains all documentation related to architecture of the NSCTool.
 
+## Development
+
+To preview diagrams, just install [PlanUML](https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml) into your VSCode:
+
+```shell
+# CTRL + Shift + P
+ext install jebbs.plantuml
+```
+
+To preview the diagram hit `ALT + D`.
+
 ## C4 model
 * Level 1: [System Context](./c4/01-system-context.md)
 * Level 2: [Container Diagram](./c4/02-container-diagram.md)

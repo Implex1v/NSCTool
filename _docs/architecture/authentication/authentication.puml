@@ -1,0 +1,34 @@
+@startuml authentication
+skinparam monochrome true
+skinparam linetype ortho
+skinparam Padding 10
+skinparam ArrowMessageAlignment center
+
+actor User 
+
+component Client {
+    
+}
+
+User .d.> Client
+
+node NSCTool {
+    node Api {
+
+    }
+
+    node Keycloak << IdP >> {
+
+    }
+}
+
+
+Api -d-> Keycloak: 0. Get keys
+Client -r-> Keycloak: 1.0 Resource Owner Password \n Credentials request
+Keycloak ...> Client: 1.1 Acces & Refresh Token 
+Client --> Api: 2.1 Request protected resource 
+Api -r-> Api: 2.2 Validate access token
+Api --> Client: 2.3 Protected resource
+
+
+@enduml
