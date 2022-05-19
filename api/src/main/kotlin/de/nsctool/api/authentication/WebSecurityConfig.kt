@@ -28,7 +28,7 @@ class WebSecurityConfig(
             .and()
             .authorizeHttpRequests { auth ->
                 auth
-                    .antMatchers("/health", "/doc/**", "/test", "/error", "/login")
+                    .antMatchers("/health", "/doc/**", "/test", "/error", "/login", "/characters/**")
                         .permitAll()
                     .anyRequest()
                         .authenticated().and()

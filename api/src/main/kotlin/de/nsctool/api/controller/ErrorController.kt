@@ -21,6 +21,7 @@ class ErrorController(var errorAttributes: ErrorAttributes): AbstractErrorContro
 
         if(error is RestException) {
             statusCode = error.statusCode
+            attrs["status"] = error.statusCode.value()
             attrs["message"] = error.message
         }
 
