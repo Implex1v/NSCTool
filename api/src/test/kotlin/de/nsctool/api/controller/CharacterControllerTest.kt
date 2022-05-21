@@ -53,7 +53,7 @@ class CharacterControllerTest (
         controller.delete(uuid.toString())
         verify { repository.deleteById(uuid) }
 
-        every { repository.deleteById(uuid) }.throws(IllegalArgumentException())
+        every { repository.deleteById(uuid) } throws(IllegalArgumentException())
         shouldThrowExactly<NotFoundException> { controller.delete(uuid.toString()) }
     }
 

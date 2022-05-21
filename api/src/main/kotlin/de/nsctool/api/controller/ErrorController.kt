@@ -1,6 +1,7 @@
 package de.nsctool.api.controller
 
 import de.nsctool.api.controller.exceptions.RestException
+import org.slf4j.LoggerFactory
 import org.springframework.boot.autoconfigure.web.servlet.error.AbstractErrorController
 import org.springframework.boot.web.error.ErrorAttributeOptions
 import org.springframework.boot.web.servlet.error.ErrorAttributes
@@ -8,12 +9,16 @@ import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.context.request.WebRequest
 import javax.servlet.http.HttpServletRequest
 
 @Controller
 class ErrorController(var errorAttributes: ErrorAttributes): AbstractErrorController(errorAttributes) {
-    @GetMapping(value = ["/error"], produces = [MediaType.APPLICATION_JSON_VALUE])
+    private val logger = LoggerFactory.getLogger(this::class.java)
+
+    @RequestMapping(value = ["/error"], produces = [MediaType.APPLICATION_JSON_VALUE], method = [RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT ])
     fun error(request: HttpServletRequest, webRequest: WebRequest): ResponseEntity<Map<String, Any>> {
         val error = errorAttributes.getError(webRequest)
         val attrs = super.getErrorAttributes(request, ErrorAttributeOptions.defaults())
@@ -25,6 +30,7 @@ class ErrorController(var errorAttributes: ErrorAttributes): AbstractErrorContro
             attrs["message"] = error.message
         }
 
+        logger.error(error.message, error)
         return ResponseEntity(attrs, statusCode)
     }
 }

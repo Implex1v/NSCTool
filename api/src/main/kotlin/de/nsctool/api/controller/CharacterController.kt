@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RestController
-import java.util.UUID
 
 @RestController()
 @RequestMapping("/characters")
@@ -24,11 +23,11 @@ class CharacterController(
 
     @ResponseBody
     @GetMapping()
-    fun getAll(): Iterable<de.nsctool.api.model.Character> = repository.findAll()
+    fun getAll(): Iterable<Character> = repository.findAll()
 
     @ResponseBody
     @GetMapping("/{uuid}")
-    fun getById(@PathVariable uuid: String): de.nsctool.api.model.Character {
+    fun getById(@PathVariable uuid: String): Character {
         val mappedUUID = uuid.parseUUIDOrThrow()
         return repository
             .findById(mappedUUID)
@@ -49,19 +48,11 @@ class CharacterController(
 
     @ResponseBody
     @PostMapping
-    fun create(@RequestBody character: de.nsctool.api.model.Character): de.nsctool.api.model.Character {
+    fun create(@RequestBody character: Character): Character {
         if (repository.existsById(character.id)) {
             throw BadRequestException("character with id already exists")
         }
         return repository.save(character)
     }
 
-}
-
-fun String.parseUUIDOrThrow(): UUID {
-    try {
-        return UUID.fromString(this)
-    } catch (e: IllegalArgumentException) {
-        throw BadRequestException("uuid is invalid", e)
-    }
 }

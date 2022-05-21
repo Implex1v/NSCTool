@@ -20,6 +20,7 @@ val jwtVersion = "0.11.5"
 val mockkVersion = "1.12.3"
 val kotestVersion = "5.1.0"
 val springMockVersion = "3.1.1"
+val keycloakAdminClientVersion = "18.0.0"
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -37,6 +38,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("io.jsonwebtoken:jjwt-api:$jwtVersion")
+	implementation("org.keycloak:keycloak-admin-client:$keycloakAdminClientVersion")
 
 	runtimeOnly("org.postgresql:postgresql")
 	runtimeOnly("io.jsonwebtoken:jjwt-impl:$jwtVersion")

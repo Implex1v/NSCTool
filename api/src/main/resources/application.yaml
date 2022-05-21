@@ -4,20 +4,6 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8180/realms/nsctool
-#      client:
-#        provider:
-#          keycloak:
-#            authorization-uri: http://localhost:8180/realms/nsctool/protocol/openid-connect/auth
-#            token-uri: http://localhost:8180/realms/nsctool/protocol/openid-connect/token
-#            jwk-set-uri: http://localhost:8180/realms/nsctool/protocol/openid-connect/certs
-#            user-info-uri: http://localhost:8180/realms/nsctool/protocol/openid-connect/userinfo
-#            user-name-attribute: user_name
-#        registration:
-#          keycloak:
-#            client-id: api
-#            client-secret: iC0nmgw7gz1Q8beOxYKFZl1mJ38iGrdy
-#            scope: openid,profile
-#            authorization-grant-type: password
   jpa:
     show-sql: 'false'
     hibernate:
@@ -48,3 +34,13 @@ logging:
         web:
           client:
             RestTemplate: DEBUG
+
+keycloak:
+  admin:
+    baseUri: http://localhost:8180
+    realm: nsctool
+    username: api-admin
+    password: acSsYQMPh6bE2rTCKg4niHe6jW9NUWdw
+    client:
+      id: idm-client
+      secret: efUD1vwp4VuVLzz999khJCIMZXV3nkMa

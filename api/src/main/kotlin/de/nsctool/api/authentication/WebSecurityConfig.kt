@@ -28,9 +28,11 @@ class WebSecurityConfig(
             .and()
             .authorizeHttpRequests { auth ->
                 auth
-                    .antMatchers("/health", "/doc/**", "/test", "/error", "/login", "/characters/**")
-                        .permitAll()
-                    .anyRequest()
+                    .antMatchers("/health", "/doc/**", "/test", "/error", "/login", "/characters/**", "/users/**")
+                        .permitAll().and()
+                        .csrf().disable()
+
+                auth.anyRequest()
                         .authenticated().and()
                         .csrf().disable()
                         .oauth2ResourceServer {
