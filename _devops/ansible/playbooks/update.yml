@@ -12,12 +12,6 @@
       - "{{ playbook_dir }}/../../../docker-compose.yml"
       # - "{{ playbook_dir }}/../../../docker-compose.override.yml" We don't want to deploy plantuml
 
-    # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/template_module.html
-    - name: Template and copy env file
-      ansible.builtin.template:
-        src: "{{ playbook_dir }}/../templates/.env.j2"
-        dest: "{{ workingdir }}/.env"
-
     # https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_module.html
     - name: Tear down existing services
       community.docker.docker_compose:
@@ -25,6 +19,12 @@
         debug: yes
         state: absent  
 
+    # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/template_module.html
+    - name: Template and copy env file
+      ansible.builtin.template:
+        src: "{{ playbook_dir }}/../templates/.env.j2"
+        dest: "{{ workingdir }}/.env"
+        
     - name: Pull newer images
       community.docker.docker_compose:
         project_src: "{{ workingdir }}"

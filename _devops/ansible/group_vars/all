@@ -1,2 +1,15 @@
 # Global configuration files for all server
-workingdir: /opt/docker/nsctool
+workingdir:  /opt/docker/nsctool
+
+# Configuration for the system
+app_keycloak_admin_baseuri: "https://auth.nsctool.{{ lookup('env','APP_HOST') }}"
+app_keycloak_admin_realm: "{{ lookup('env','APP_KEYCLOAK_ADMIN_REALM') }}"
+app_keycloak_admin_username: "{{ lookup('env','APP_KEYCLOAK_ADMIN_USERNAME') }}"
+app_keycloak_admin_password: "{{ lookup('env','APP_KEYCLOAK_ADMIN_PASSWORD') }}"
+app_keycloak_admin_client_id: "{{ lookup('env','APP_KEYCLOAK_ADMIN_CLIENT_ID') }}"
+app_keycloak_admin_client_secret: "{{ lookup('env','APP_KEYCLOAK_ADMIN_CLIENT_SECRET') }}"
+keycloak_admin: "{{ lookup('env','KEYCLOAK_ADMIN') }}"
+keycloak_admin_password: "{{ lookup('env','KEYCLOAK_ADMIN_PASSWORD') }}"
+cr_base: "{{ lookup('env','CR') }}/nsctool"
+web_host: "nsctool.{{ lookup('env','APP_HOST') }}"
+api_db_password: "{{ lookup('env','APP_API_DB_PASSWORD') }}"

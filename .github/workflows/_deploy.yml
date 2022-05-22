@@ -24,6 +24,27 @@ on:
       cr:
         description: The cr host
         required: true
+      app_keycloak_admin_realm:
+        description: The cr host
+        required: true
+      app_keycloak_admin_username:
+        description: The cr host
+        required: true
+      app_keycloak_admin_password:
+        description: The cr host
+        required: true
+      app_keycloak_admin_client_id:
+        description: The cr host
+        required: true
+      app_keycloak_admin_client_secret:
+        description: The cr host
+        required: true
+      keycloak_admin:
+        description: The cr host
+        required: true
+      keycloak_admin_password:
+        description: The cr host
+        required: true  
 
 jobs:
   deploy:
@@ -32,6 +53,17 @@ jobs:
     - uses: actions/checkout@v3
     - name: Run playbook
       uses: dawidd6/action-ansible-playbook@v2
+      env:
+        APP_KEYCLOAK_ADMIN_REALM: ${{ secrets.app_keycloak_admin_realm }}
+        APP_KEYCLOAK_ADMIN_USERNAME: ${{ secrets.app_keycloak_admin_username }}
+        APP_KEYCLOAK_ADMIN_PASSWORD: ${{ secrets.app_keycloak_admin_password }}
+        APP_KEYCLOAK_ADMIN_CLIENT_ID: ${{ secrets.app_keycloak_admin_client_id }}
+        APP_KEYCLOAK_ADMIN_CLIENT_SECRET: ${{ secrets.app_keycloak_admin_client_secret }}
+        KEYCLOAK_ADMIN: ${{ secrets.keycloak_admin }}
+        KEYCLOAK_ADMIN_PASSWORD: ${{ secrets.keycloak_admin_password }}
+        CR: ${{ secrets.cr }}
+        APP_HOST: ${{ secrets.host }}
+        APP_API_DB_PASSWORD: ${{ secrets.api_db_password }}
       with:
         playbook: playbooks/update.yml
         directory: ./_devops/ansible
@@ -41,7 +73,7 @@ jobs:
         # Optional, literal inventory file contents
         inventory: |
           [all]
-          ${{ secrets.host }} cr_base=${{ secrets.cr }}/nsctool web_host=nsctool.${{ secrets.host }} api_db_password=${{ secrets.apiDbPassword }}
+          ${{ secrets.host }}
   
   slack:
     runs-on: ubuntu-20.04
