@@ -39,7 +39,7 @@ class DefaultKeycloakClient: KeycloakClient {
         username: String,
         email: String,
         password: String,
-        roles: List<ApiRoles>): String
+        roles: List<Role>): String
     {
         try {
             val userResource = client.users()

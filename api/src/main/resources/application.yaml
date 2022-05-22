@@ -37,10 +37,10 @@ logging:
 
 keycloak:
   admin:
-    baseUri: http://localhost:8180
-    realm: nsctool
-    username: api-admin
-    password: acSsYQMPh6bE2rTCKg4niHe6jW9NUWdw
+    baseUri: ${APP_KEYCLOAK_ADMIN_BASEURI:http://localhost:8180}
+    realm: ${APP_KEYCLOAK_ADMIN_REALM:nsctool}
+    username: ${APP_KEYCLOAK_ADMIN_USERNAME:api-admin}
+    password: ${APP_KEYCLOAK_ADMIN_PASSWORD:acSsYQMPh6bE2rTCKg4niHe6jW9NUWdw}
     client:
-      id: idm-client
-      secret: efUD1vwp4VuVLzz999khJCIMZXV3nkMa
+      id: ${APP_KEYCLOAK_ADMIN_CLIENT_ID:idm-client}
+      secret: ${APP_KEYCLOAK_ADMIN_CLIENT_SECRET:efUD1vwp4VuVLzz999khJCIMZXV3nkMa}

@@ -1,12 +1,11 @@
 package de.nsctool.api.controller
 
-import de.nsctool.api.authentication.keycloak.ApiRoles
+import de.nsctool.api.authentication.keycloak.Role
 import de.nsctool.api.authentication.keycloak.KeycloakClient
 import de.nsctool.api.controller.exceptions.BadRequestException
 import de.nsctool.api.model.User
 import de.nsctool.api.repository.UserRepository
 import io.kotest.assertions.throwables.shouldThrowExactly
-import io.kotest.matchers.shouldBe
 import io.mockk.InternalPlatformDsl.toStr
 import io.mockk.every
 import io.mockk.justRun
@@ -24,7 +23,7 @@ internal class UserControllerTest {
     @Test
     fun `should create user`() {
         val uuid = UUID.randomUUID()
-        every { client.createUser(user.username, user.email, user.password, listOf(ApiRoles.USER)) } returns uuid.toString()
+        every { client.createUser(user.username, user.email, user.password, listOf(Role.USER)) } returns uuid.toString()
         justRun { client.resetPassword(uuid.toStr(), user.password, false) }
         every { repository.save(any()) } returns User().apply {
             userName = user.username
@@ -34,14 +33,14 @@ internal class UserControllerTest {
 
         controller.create(user)
 
-        verify { client.createUser(user.username, user.email, user.password, listOf(ApiRoles.USER)) }
+        verify { client.createUser(user.username, user.email, user.password, listOf(Role.USER)) }
         verify { client.resetPassword(uuid.toStr(), user.password, false) }
         verify { repository.save(any()) }
     }
 
     @Test
     fun `should handle create user error`() {
-        every { client.createUser(user.email, user.username, user.password, listOf(ApiRoles.USER)) } throws(BadRequestException("Foo"))
+        every { client.createUser(user.email, user.username, user.password, listOf(Role.USER)) } throws(BadRequestException("Foo"))
         shouldThrowExactly<BadRequestException> { controller.create(user) }
     }
 }
