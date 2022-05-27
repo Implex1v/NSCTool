@@ -79,4 +79,24 @@ class DefaultKeycloakClient: KeycloakClient {
             throw BadRequestException("Failed to change password", ex)
         }
     }
+
+    override fun addRealmRole(userId: String, roleName: Role) {
+        try {
+            val role = client
+                .roles()
+                .get(roleName.idpRole())
+                .toRepresentation()
+
+            val user = client
+                .users()
+                .get(userId)
+
+            user
+                .roles()
+                .realmLevel()
+                .add(listOf(role))
+        } catch (ex: Exception)  {
+            throw BadRequestException("Failed to add user '$userId' to role '$roleName'", ex)
+        }
+    }
 }

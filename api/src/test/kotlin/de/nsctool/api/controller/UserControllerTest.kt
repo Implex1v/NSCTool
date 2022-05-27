@@ -25,6 +25,7 @@ internal class UserControllerTest {
         val uuid = UUID.randomUUID()
         every { client.createUser(user.username, user.email, user.password, listOf(Role.USER)) } returns uuid.toString()
         justRun { client.resetPassword(uuid.toStr(), user.password, false) }
+        justRun { client.addRealmRole(uuid.toStr(), Role.USER) }
         every { repository.save(any()) } returns User().apply {
             userName = user.username
             id = uuid

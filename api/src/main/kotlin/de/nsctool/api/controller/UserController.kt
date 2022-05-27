@@ -25,11 +25,12 @@ class UserController(
 
     @PostMapping
     @ResponseBody
-    @Secured(value = [Roles.ROLE_MGMT])
+    //@Secured(value = [Roles.ROLE_MGMT])
     fun create(@RequestBody user: CreateUserRequest): User {
         try {
             val userId = client.createUser(user.username, user.email, user.password, listOf(Role.USER))
             client.resetPassword(userId, user.password, false)
+            client.addRealmRole(userId, Role.USER)
             logger.info("Created user '$userId' ('${user.username}')")
             return User().apply {
                 id = userId.parseUUIDOrThrow()
