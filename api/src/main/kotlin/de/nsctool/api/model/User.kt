@@ -13,11 +13,6 @@ import javax.persistence.Table
 @Table(name = "users")
 class User {
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-        name = "UUID",
-        strategy = "org.hibernate.id.UUIDGenerator",
-    )
     var id: UUID = UUID.randomUUID()
 
     @Column(unique = true)

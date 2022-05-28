@@ -6,6 +6,7 @@ enum class Role(val value: String) {
     MANAGEMENT(Roles.ROLE_MGMT);
 
     fun idpRole() = value.replace("ROLE_", "")
+    override fun toString(): String = value
 }
 
 class Roles {

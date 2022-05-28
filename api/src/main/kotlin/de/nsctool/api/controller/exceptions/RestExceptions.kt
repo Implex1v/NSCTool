@@ -15,3 +15,4 @@ abstract class RestException(var statusCode: HttpStatus, message: String, cause:
 
 class NotFoundException(message: String, throwable: Throwable? = null): RestException(HttpStatus.NOT_FOUND, message, throwable)
 class BadRequestException(message: String, throwable: Throwable? = null): RestException(HttpStatus.BAD_REQUEST, message, throwable)
+class UnauthorizedException(message: String, throwable: Throwable? = null): RestException(HttpStatus.UNAUTHORIZED, message, throwable)

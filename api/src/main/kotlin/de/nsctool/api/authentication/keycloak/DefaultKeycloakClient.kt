@@ -1,6 +1,7 @@
 package de.nsctool.api.authentication.keycloak
 
 import de.nsctool.api.controller.exceptions.BadRequestException
+import de.nsctool.api.controller.parseUUIDOrThrow
 import org.keycloak.admin.client.CreatedResponseUtil
 import org.keycloak.admin.client.Keycloak
 import org.keycloak.admin.client.resource.RealmResource
@@ -8,6 +9,7 @@ import org.keycloak.representations.idm.CredentialRepresentation
 import org.keycloak.representations.idm.UserRepresentation
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
+import java.util.*
 
 @Component
 class DefaultKeycloakClient: KeycloakClient {
@@ -39,7 +41,7 @@ class DefaultKeycloakClient: KeycloakClient {
         username: String,
         email: String,
         password: String,
-        roles: List<Role>): String
+        roles: List<Role>): UUID
     {
         try {
             val userResource = client.users()
@@ -51,10 +53,9 @@ class DefaultKeycloakClient: KeycloakClient {
             }
 
             val userId = userResource.create(user).let {
-                CreatedResponseUtil.getCreatedId(it)
+                CreatedResponseUtil.getCreatedId(it).parseUUIDOrThrow()
             }
 
-            resetPassword(userId, password, false)
             return userId
         } catch (ex: Exception) {
             // sadly we don't know what exception is thrown on error => diaper pattern
@@ -62,7 +63,7 @@ class DefaultKeycloakClient: KeycloakClient {
         }
     }
 
-    override fun resetPassword(userId: String, password: String, temporary: Boolean) {
+    override fun resetPassword(userId: UUID, password: String, temporary: Boolean) {
         try {
             val passwordReset = CredentialRepresentation().apply {
                 isTemporary = temporary
@@ -72,7 +73,7 @@ class DefaultKeycloakClient: KeycloakClient {
 
             val user = client
                 .users()
-                .get(userId)
+                .get(userId.toString())
 
             user.resetPassword(passwordReset)
         } catch (ex: Exception) {
@@ -80,7 +81,17 @@ class DefaultKeycloakClient: KeycloakClient {
         }
     }
 
-    override fun addRealmRole(userId: String, roleName: Role) {
+    override fun deleteUser(userId: UUID) {
+        try {
+            client
+                .users()
+                .delete(userId.toString())
+        } catch (ex: Exception) {
+            throw BadRequestException("Failed to delete user", ex)
+        }
+    }
+
+    override fun addRealmRoleToUser(userId: UUID, roleName: Role) {
         try {
             val role = client
                 .roles()
@@ -89,7 +100,7 @@ class DefaultKeycloakClient: KeycloakClient {
 
             val user = client
                 .users()
-                .get(userId)
+                .get(userId.toString())
 
             user
                 .roles()

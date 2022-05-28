@@ -30,7 +30,10 @@ class ErrorController(var errorAttributes: ErrorAttributes): AbstractErrorContro
             attrs["message"] = error.message
         }
 
-        logger.error(error.message, error)
+        if (error != null) {
+            logger.error(error.message ?: "Not found", error)
+        }
+
         return ResponseEntity(attrs, statusCode)
     }
 }
