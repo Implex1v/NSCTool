@@ -18,5 +18,7 @@ ENV APP_DB_URL jdbc:postgresql://db:5432/nsctool
 ENV APP_DB_USERNAME nsctool
 ENV APP_DB_PASSWORD nsctool
 
+EXPOSE 8080
+
 COPY --from=build /app/build/libs/api-*.jar /app/api.jar
 CMD ["java", "-jar", "/app/api.jar"]

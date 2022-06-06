@@ -15,7 +15,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.nsctool-web.rule=Host(`web.${HOST:-localhost}`)"
-      - "traefik.http.routers.nsctool-web.entrypoints=3000"
+      - "traefik.http.routers.nsctool-web.entrypoints=web"
     networks:
       - "nsctool"
 

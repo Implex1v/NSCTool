@@ -16,6 +16,12 @@ RUN npm run build
 FROM base AS prod
 ENV NODE_ENV production
 
+ARG BUILD_VERSION=0.1.0
+ARG GIT_COMMIT=unknown
+
+LABEL org.opencontainers.image.version="${BUILD_VERSION}"\
+      org.opencontainers.image.revision="${GIT_COMMIT}"
+
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
