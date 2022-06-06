@@ -4,12 +4,13 @@
 - hosts: all
   remote_user: ansible
   tasks:
-    - name: Copy docker compose files
+    - name: Copy docker files
       ansible.builtin.copy:
         src: "{{ item }}"
         dest: "{{ workingdir }}/"
       with_items: 
       - "{{ playbook_dir }}/../../../docker-compose.yml"
+      - "{{ playbook_dir }}/../../../db"
       # - "{{ playbook_dir }}/../../../docker-compose.override.yml" We don't want to deploy plantuml
 
     # https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_module.html

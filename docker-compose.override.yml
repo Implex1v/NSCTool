@@ -35,3 +35,6 @@ services:
       - -Dkeycloak.migration.file=keycloak-backup.json
     volumes:
       - "./_data/keycloak/:/opt/keycloak/data/h2/"
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
