@@ -11,6 +11,7 @@ RUN npm ci
 
 COPY . .
 #RUN npm test -- --watchAll=false --coverage
+RUN npm run lint
 RUN npm run build
 
 FROM base AS prod
