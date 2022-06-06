@@ -12,7 +12,6 @@ services:
       context: ./web/
       args:
         <<: *build_args
-    ports: ["7080:3000"]
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.nsctool-web.rule=Host(`web.${HOST:-localhost}`)"
