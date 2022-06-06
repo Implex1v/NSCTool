@@ -1,6 +1,9 @@
 version: "3.7"
 
 services:
+  web:
+    ports: ["7080:3000"]
+
   db:
     ports:
       - "5432:5432"
