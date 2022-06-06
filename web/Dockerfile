@@ -6,12 +6,11 @@ FROM base AS build
 
 COPY package.json ./package.json
 COPY package-lock.json ./package-lock.json
-RUN ls -la
 RUN npm ci
 
 COPY . .
-#RUN npm test -- --watchAll=false --coverage
-RUN npm run lint
+RUN npm test -- --watchAll=false --coverage
+# RUN npm run lint # should be
 RUN npm run build
 
 FROM base AS prod
