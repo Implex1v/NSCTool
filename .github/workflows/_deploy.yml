@@ -49,6 +49,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-20.04
+    concurrency: 
+      group: deploy-dev
+      cancel-in-progress: false
     steps:
     - uses: actions/checkout@v3
     - name: Run playbook
