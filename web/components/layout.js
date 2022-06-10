@@ -3,7 +3,7 @@ import Navbar from "./nav";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faDragon} from "@fortawesome/free-solid-svg-icons";
 
-export default function Layout({children, title}) {
+export default function Layout({children, title=""}) {
     return (
         <div className="layout">
             <Head>

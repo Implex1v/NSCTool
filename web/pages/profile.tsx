@@ -1,8 +1,8 @@
 import {useSession} from "next-auth/react";
 import Layout from "../components/layout";
 import Head from "next/head";
-import AccessDenied from "../components/unauthenticated";
 import useTranslation from "next-translate/useTranslation";
+import AccessDenied from "../components/unauthenticated";
 
 export default function Profile() {
     const { t } = useTranslation('common');
@@ -18,7 +18,7 @@ export default function Profile() {
     }
 
     return (
-        <Layout title="">
+        <Layout>
             <Head>
                 <title>{t('profile')}: { session.user.name}</title>
             </Head>
