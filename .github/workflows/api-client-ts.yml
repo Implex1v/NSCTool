@@ -1,4 +1,4 @@
-name: api
+name: api-client/ts
 on:
   push:
     branches:
@@ -52,6 +52,7 @@ jobs:
           commit_message: (api-client/ts) [generated] Release version ${APP_VERSION}
           file_pattern: api-client/ts/**
           commit_user_name: NPM Bot   
+      # https://github.com/marketplace/actions/npm-publish
       - name: Push package to npm
         uses: JS-DevTools/npm-publish@v1
         with:
