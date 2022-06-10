@@ -33,6 +33,12 @@ COPY --from=build --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
 EXPOSE 3000
+
 ENV PORT 3000
+ENV APP_AUTH_URL unset
+ENV NEXTAUTH_URL unset
+ENV NEXTAUTH_SECRET unset
+ENV APP_AUTH_CLIENT_ID unset
+ENV APP_AUTH_CLIENT_SECRET unset
 
 CMD ["node", "server.js"]

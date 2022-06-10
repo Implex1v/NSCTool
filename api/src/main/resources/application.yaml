@@ -3,7 +3,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8180/realms/nsctool
+          issuer-uri: ${APP_KEYCLOAK_ADMIN_BASEURI:-http://localhost:8180}/realms/nsctool
   jpa:
     show-sql: 'false'
     hibernate:

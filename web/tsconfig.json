@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "moduleResolution": "NodeNext",
     "lib": [
       "dom",
       "dom.iterable",

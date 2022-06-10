@@ -22,6 +22,7 @@ The default user for the admin panel is: `admin:admin`.
 |realm|nstool|||
 |client|api|hBQYe4NMrOMRFyPZNCu7KvGwE6w5DYPx||
 |client|idm-client|efUD1vwp4VuVLzz999khJCIMZXV3nkMa|Client for managing users|
+|client|web|a0l6upjfJP2RD54SC8F0lyy46fUZO0l1||
 |user|user|123456|api-role: user|
 |user|admin|123456|api-role: admin|
 |user|api-admin|acSsYQMPh6bE2rTCKg4niHe6jW9NUWdw|User manager|

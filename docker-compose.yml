@@ -26,9 +26,10 @@ services:
       context: ./api/
       args:
         <<: *build_args
-    ports: ["7090:8080"]
     volumes:
       - "./api/build:/app/build"
+    depends_on:
+    - keycloak
     environment:
       APP_DB_URL: jdbc:postgresql://db:5432/nsctool
       APP_DB_USERNAME: nsctool
@@ -64,12 +65,12 @@ services:
     environment:
       KEYCLOAK_ADMIN: ${APP_KEYCLOAK_USERNAME:-admin}
       KEYCLOAK_ADMIN_PASSWORD: ${APP_KEYCLOAK_PASSWORD:-admin}
-      DB_VENDOR: POSTGRES
-      DB_ADDR: db
-      DB_DATABASE: keycloak
-      DB_USER: keycloak
-      DB_SCHEMA: public
-      DB_PASSWORD: password
+      # DB_VENDOR: POSTGRES
+      # DB_ADDR: db
+      # DB_DATABASE: keycloak
+      # DB_USER: keycloak
+      # DB_SCHEMA: public
+      # DB_PASSWORD: password
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.nsctool-auth.rule=Host(`auth.${HOST:-localhost}`)"
@@ -77,7 +78,7 @@ services:
     volumes:
       # TODO: use volume with permissions
       - "/opt/docker/nsctool/keycloak/:/opt/keycloak/data/h2/"
-      - "db/postgres/:/docker-entrypoint-initdb.d/"
+      - "/db/postgres/:/docker-entrypoint-initdb.d/"
     networks:
       - nsctool
       - db
