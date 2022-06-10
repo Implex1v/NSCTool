@@ -35,7 +35,6 @@ jobs:
     needs:
       - version
     runs-on: ubuntu-20.04
-    working-directory: ./api-client/ts/
     env:
       APP_VERSION: ${{ needs.version.outputs.semver }}
     steps:
@@ -44,6 +43,7 @@ jobs:
         run: |
           npm install @openapitools/openapi-generator-cli -g     
       - name: Generator client
+        working-directory: ./api-client/ts/
         run: |
           openapi-generator-cli generate -g typescript -o . -i openapi.json --additional-properties=npmName=@nsctool/api-client-ts,npmRepository=https://github.com/Implex1v/NSCTool,npmVersion=${APP_VERSION}
       # https://github.com/stefanzweifel/git-auto-commit-action
@@ -55,6 +55,7 @@ jobs:
           commit_user_name: NPM Bot   
       # https://github.com/marketplace/actions/npm-publish
       - name: Push package to npm
+        working-directory: ./api-client/ts/
         uses: JS-DevTools/npm-publish@v1
         with:
           tag: ${{ needs.version.outputs.semver }}
