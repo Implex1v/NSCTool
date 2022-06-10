@@ -35,10 +35,11 @@ jobs:
     needs:
       - version
     runs-on: ubuntu-20.04
-    working-directory: api-client/ts/
+    working-directory: ./api-client/ts/
     env:
       APP_VERSION: ${{ needs.version.outputs.semver }}
     steps:
+      - uses: actions/checkout@v3
       - name: Install openapi-generator-cli
         run: |
           npm install @openapitools/openapi-generator-cli -g     
