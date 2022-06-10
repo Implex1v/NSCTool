@@ -57,6 +57,6 @@ jobs:
       - name: Push package to npm
         uses: JS-DevTools/npm-publish@v1
         with:
-          tag: ${{ needs.version.outputs.semver }}
+          tag: main
           token: ${{ secrets.NPM_TOKEN }}
           package: ./api-client/ts/package.json
