@@ -45,7 +45,7 @@ jobs:
       - name: Generator client
         working-directory: ./api-client/ts/
         run: |
-          openapi-generator-cli generate -g typescript -o . -i openapi.json --additional-properties=npmName=@nsctool/api-client-ts,npmRepository=https://github.com/Implex1v/NSCTool,npmVersion=${APP_VERSION}
+          openapi-generator-cli generate -g typescript -o . -i openapi.json --additional-properties=npmName=@nsctool/api-client-ts,npmVersion=${APP_VERSION}
       # https://github.com/stefanzweifel/git-auto-commit-action
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
