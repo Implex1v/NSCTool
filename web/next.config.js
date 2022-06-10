@@ -1,5 +1,6 @@
 // next.config.js
 const nextTranslate = require('next-translate');
+var path = require("path");
 
 module.exports = nextTranslate({
     // ... rest of the configuration.
@@ -10,5 +11,8 @@ module.exports = nextTranslate({
         locales: ["de-DE", "en-US"],
         default: "de-DE",
         localeDetection: true,
+    },
+    sassOptions: {
+        includePaths: [path.join(__dirname, 'styles')]
     }
 })

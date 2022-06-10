@@ -1,0 +1,12 @@
+// Required
+@import "../node_modules/bootstrap/scss/functions";
+
+// Default variable overrides
+$body-bg: rgb(15, 23, 42);
+$body-color: #111;
+
+$btn-border-radius: 0px;
+
+  // Required
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/mixins";

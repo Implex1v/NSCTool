@@ -26,7 +26,7 @@ export default function Layout({children, title}) {
                     </div>
                 </div>
 
-                <footer className="row mt-5">
+                <footer className="row mt-5 mb-5">
                     <div className="col-md-12">
                         <div className="w-full mx-auto">
                             <p className="text-center">

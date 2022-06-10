@@ -1,5 +1,4 @@
-import '../styles/global.css'
-import 'bootstrap/dist/css/bootstrap.css'
+import '../styles/global.scss'
 import {SessionProvider} from "next-auth/react";
 
 import { config } from '@fortawesome/fontawesome-svg-core'
