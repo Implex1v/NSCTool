@@ -16,6 +16,7 @@ jobs:
         run: sudo apt-get install -y graphviz 
       - name: Update plantuml files
         run: ./_docs/plantuml.sh
+      # https://github.com/stefanzweifel/git-auto-commit-action
       - name: Commit changes if any
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
