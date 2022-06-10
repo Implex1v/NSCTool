@@ -1,0 +1,8 @@
+{
+  "characters": "Charaktere",
+  "myCharacters": "Meine Charaktere",
+  "profile": "Profil",
+  "logout": "Logout",
+  "accessDenied": "Zugriff verweigert",
+  "accessDeniedText": "Du musst dich einloggen, um diese Seite zu sehen."
+}

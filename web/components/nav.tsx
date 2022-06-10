@@ -9,8 +9,11 @@ import {
     faUser
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
+import useTranslation from "next-translate/useTranslation";
+import Emoji from "./emoji";
 
 export default function Navbar() {
+    const { t } = useTranslation('common');
     const { data: session, status } = useSession()
     const profileMenu = status === "authenticated" ? UserMenu(session) : GuestMenu();
 
@@ -25,15 +28,31 @@ export default function Navbar() {
                         <li className="nav-item">
                             <Link href="/characters/">
                                 <a className="nav-link text-white">
-                                    <FontAwesomeIcon icon={faPeopleGroup} />Characters
+                                    <FontAwesomeIcon icon={faPeopleGroup} />{t('characters')}
                                 </a>
                             </Link>
                         </li>
                     </ul>
                 </div>
                 <div className="ms-auto">
-                    <div className="col-xl-12">
-                        {profileMenu}
+                    <div className="row">
+                        <div className="col-md-2">
+                            <Link href="#" locale="en">
+                                <a>
+                                    <Emoji symbol="🇬🇧" label="en" />
+                                </a>
+                            </Link>
+                        </div>
+                        <div className="col-md-2">
+                            <Link href="#" locale="de">
+                                <a>
+                                    <Emoji symbol="🇩🇪" label="de" />
+                                </a>
+                            </Link>
+                        </div>
+                        <div className="col-md-8">
+                            {profileMenu}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -42,6 +61,7 @@ export default function Navbar() {
 }
 
 function UserMenu(props) {
+    const { t } = useTranslation('common');
     return (
         <Dropdown>
             <Dropdown.Toggle variant="primary" id="dropdown-profile">
@@ -49,10 +69,16 @@ function UserMenu(props) {
                 {props.user.name + ' '}
             </Dropdown.Toggle>
             <Dropdown.Menu className="bg-dark">
-                <Dropdown.Item href="/profile" className="text-white"><FontAwesomeIcon icon={faAddressCard} />Profile</Dropdown.Item>
-                <Dropdown.Item href="/characters" className="text-white"><FontAwesomeIcon icon={faPeopleGroup} />My characters</Dropdown.Item>
+                <Dropdown.Item href="/profile" className="text-white">
+                    <FontAwesomeIcon icon={faAddressCard} />{t('profile')}
+                </Dropdown.Item>
+                <Dropdown.Item href="/characters" className="text-white">
+                    <FontAwesomeIcon icon={faPeopleGroup} />{t('myCharacters')}
+                </Dropdown.Item>
                 <Dropdown.Divider />
-                <Dropdown.Item href="/logout" className="text-danger"><FontAwesomeIcon icon={faArrowRightFromBracket} />Logout</Dropdown.Item>
+                <Dropdown.Item href="/logout" className="text-danger">
+                    <FontAwesomeIcon icon={faArrowRightFromBracket} />{t('logout')}
+                </Dropdown.Item>
             </Dropdown.Menu>
         </Dropdown>
     )
