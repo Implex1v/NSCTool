@@ -55,8 +55,8 @@ jobs:
           commit_user_name: NPM Bot   
       # https://github.com/marketplace/actions/npm-publish
       - name: Push package to npm
-        working-directory: ./api-client/ts/
         uses: JS-DevTools/npm-publish@v1
         with:
           tag: ${{ needs.version.outputs.semver }}
           token: ${{ secrets.NPM_TOKEN }}
+          package: ./api-client/ts/package.json
