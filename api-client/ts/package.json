@@ -2,10 +2,10 @@
   "name": "@nsctool/api-client-ts",
   "version": "0.1.96",
   "description": "OpenAPI client for @nsctool/api-client-ts",
-  "author": "OpenAPI-Generator Contributors",
+  "author": "Implex1v",
   "repository": {
     "type": "git",
-    "url": "https://github.com/GIT_USER_ID/GIT_REPO_ID.git"
+    "url": "https://github.com/implex1v/nsctool.git"
   },
   "keywords": [
     "fetch",
@@ -13,12 +13,8 @@
     "openapi-client",
     "openapi-generator"
   ],
-  "license": "Unlicense",
-  "main": "./dist/index.js",
-  "type": "commonjs",
-  "exports": {
-    ".": "./dist/index.js"
-  },
+  "license": "MIT",
+  "type": "module",
   "typings": "./dist/index.d.ts",
   "scripts": {
     "build": "tsc",

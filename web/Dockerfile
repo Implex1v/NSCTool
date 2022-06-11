@@ -1,4 +1,4 @@
-FROM node:17.4.0-bullseye AS base
+FROM node:16-bullseye AS base
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED 1
 
