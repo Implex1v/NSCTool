@@ -26,7 +26,9 @@ class WebSecurityConfig(
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
+            .cors().and()
             .authorizeHttpRequests { auth ->
+
                 auth
                     .antMatchers("/health", "/doc/**", "/test", "/error", "/login", "/characters/**", "/users/**")
                         .permitAll().and()
@@ -43,6 +45,8 @@ class WebSecurityConfig(
                         }
             }
     }
+
+
 
     @Bean
     fun authenticationFailureHandler(): AuthenticationFailureHandler = authErrorHandler

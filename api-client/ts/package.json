@@ -1,6 +1,6 @@
 {
   "name": "@nsctool/api-client-ts",
-  "version": "0.1.99",
+  "version": "0.1.101",
   "description": "OpenAPI client for @nsctool/api-client-ts",
   "author": "OpenAPI-Generator Contributors",
   "repository": {

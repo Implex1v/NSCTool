@@ -1,8 +1,12 @@
 {
     "characters": "Characters",
     "myCharacters": "My characters",
+    "newCharacter": "New Character",
     "profile": "Profile",
     "logout": "Logout",
     "accessDenied": "Access Denied",
-    "accessDeniedText": "You must login to view this page's content."
+    "accessDeniedText": "You must login to view this page's content.",
+    "name": "Name",
+    "race": "Race",
+    "profession": "Profession"
 }

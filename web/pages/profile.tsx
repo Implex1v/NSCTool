@@ -1,5 +1,5 @@
 import {useSession} from "next-auth/react";
-import Layout from "../components/layout";
+import Layout from "../components/Layout";
 import Head from "next/head";
 import useTranslation from "next-translate/useTranslation";
 import AccessDenied from "../components/unauthenticated";

@@ -10,11 +10,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import useTranslation from "next-translate/useTranslation";
-import Emoji from "./emoji";
+import Emoji from "./Emoji";
 
 export default function Navbar() {
-    const { t } = useTranslation('common');
     const { data: session, status } = useSession()
+    const { t } = useTranslation('common');
     const profileMenu = status === "authenticated" ? UserMenu(session) : GuestMenu();
 
     return(
@@ -36,14 +36,14 @@ export default function Navbar() {
                 </div>
                 <div className="ms-auto">
                     <div className="row">
-                        <div className="col-md-2">
+                        <div className="col-md-2 d-flex align-items-center">
                             <Link href="#" locale="en">
                                 <a>
                                     <Emoji symbol="🇬🇧" label="en" />
                                 </a>
                             </Link>
                         </div>
-                        <div className="col-md-2">
+                        <div className="col-md-2 d-flex align-items-center">
                             <Link href="#" locale="de">
                                 <a>
                                     <Emoji symbol="🇩🇪" label="de" />
@@ -61,7 +61,8 @@ export default function Navbar() {
 }
 
 function UserMenu(props) {
-    const { t } = useTranslation('common');
+    const { t } = useTranslation('common')
+
     return (
         <Dropdown>
             <Dropdown.Toggle variant="primary" id="dropdown-profile">

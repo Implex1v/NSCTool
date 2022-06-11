@@ -1,8 +1,12 @@
 {
   "characters": "Charaktere",
   "myCharacters": "Meine Charaktere",
+  "newCharacter": "Neuer Charakter",
   "profile": "Profil",
   "logout": "Logout",
   "accessDenied": "Zugriff verweigert",
-  "accessDeniedText": "Du musst dich einloggen, um diese Seite zu sehen."
+  "accessDeniedText": "Du musst dich einloggen, um diese Seite zu sehen.",
+  "name": "Name",
+  "race": "Rasse",
+  "profession": "Profession"
 }

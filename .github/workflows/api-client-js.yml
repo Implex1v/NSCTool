@@ -1,10 +1,10 @@
-name: api-client/ts
+name: api-client/js
 on:
   push:
     branches:
       - main
     paths:
-      - "api-client/ts/**"
+      - "api-client/js/**"
   workflow_dispatch:
 
 defaults:
@@ -43,23 +43,23 @@ jobs:
         run: |
           npm install @openapitools/openapi-generator-cli -g     
       - name: Generator client
-        working-directory: ./api-client/ts/
+        working-directory: ./api-client/js/
         run: |
           openapi-generator-cli generate \
-            -g typescript \
+            -g javascript \
             -o . \
             -i openapi.json \
-            --additional-properties=npmName=@nsctool/api-client-ts,npmVersion=${APP_VERSION},platform=browser,framework=fetch-api,supportsES6=true
+            --additional-properties=projectName=@nsctool/api-client-js,npmVersion=${APP_VERSION},platform=browser,framework=fetch-api,licenseName=MIT,usePromises=true
       # https://github.com/stefanzweifel/git-auto-commit-action
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: (api-client/ts) [generated] Release version ${{ needs.version.outputs.semver }}
-          file_pattern: api-client/ts/**
+          commit_message: (api-client/js) [generated] Release version ${{ needs.version.outputs.semver }}
+          file_pattern: api-client/js/**
           commit_user_name: Npm bot
           skip_dirty_check: true 
       - name: npm build
-        working-directory: ./api-client/ts/
+        working-directory: ./api-client/js/
         run : |
           npm i
           npm run build
@@ -69,5 +69,5 @@ jobs:
         with:
           tag: main
           token: ${{ secrets.NPM_TOKEN }}
-          package: ./api-client/ts/package.json
+          package: ./api-client/js/package.json
           access: public

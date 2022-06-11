@@ -1,4 +1,4 @@
-import Layout from "./layout";
+import Layout from "./Layout";
 import {signIn} from "next-auth/react";
 import useTranslation from "next-translate/useTranslation";
 
