@@ -11,7 +11,7 @@ export default function Login() {
     }
 
     return (
-        <Layout title="">
+        <Layout>
             <Head>
                 <title>Login</title>
             </Head>

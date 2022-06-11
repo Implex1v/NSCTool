@@ -5,7 +5,7 @@ import useTranslation from "next-translate/useTranslation";
 export default function AccessDenied() {
     const { t } = useTranslation('common');
     return (
-        <Layout title>
+        <Layout>
             <div className="h-fill row justify-content-center">
                 <div className="col-md-4">
                     <h1>{t('accessDenied')}</h1>
