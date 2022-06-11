@@ -1,4 +1,4 @@
-## @nsctool/api-client-ts@0.1.96
+## @nsctool/api-client-ts@0.1.99
 
 This generator creates TypeScript/JavaScript client that utilizes fetch-api.
 
@@ -21,7 +21,7 @@ navigate to the folder of your consuming project and run one of the following co
 _published:_
 
 ```
-npm install @nsctool/api-client-ts@0.1.96 --save
+npm install @nsctool/api-client-ts@0.1.99 --save
 ```
 
 _unPublished (not recommended):_
