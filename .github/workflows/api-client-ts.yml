@@ -66,3 +66,4 @@ jobs:
           tag: main
           token: ${{ secrets.NPM_TOKEN }}
           package: ./api-client/ts/package.json
+          access: public
