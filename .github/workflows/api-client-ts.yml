@@ -47,16 +47,17 @@ jobs:
         run: |
           openapi-generator-cli generate -g typescript -o . -i openapi.json --additional-properties=npmName=@nsctool/api-client-ts,npmVersion=${APP_VERSION}
       # https://github.com/stefanzweifel/git-auto-commit-action
+      - name: npm build
+        working-directory: ./api-client/ts/
+        run : |
+          npm i
+          npm run build
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: (api-client/ts) [generated] Release version ${APP_VERSION}
           file_pattern: api-client/ts/**
           commit_user_name: NPM Bot
-      - name: NPM i
-        run : |
-          npm i
-          npm run build
       # https://github.com/marketplace/actions/npm-publish
       - name: Push package to npm
         uses: JS-DevTools/npm-publish@v1
