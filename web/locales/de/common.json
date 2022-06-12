@@ -8,5 +8,6 @@
   "accessDeniedText": "Du musst dich einloggen, um diese Seite zu sehen.",
   "name": "Name",
   "race": "Rasse",
-  "profession": "Profession"
+  "profession": "Profession",
+  "email": "E-Mail"
 }

@@ -18,6 +18,10 @@ class KeycloakJwtRoleConverter: Converter<Jwt, AbstractAuthenticationToken?> {
 
     companion object {
         private fun extractResourceRoles(jwt: Jwt): Collection<GrantedAuthority> {
+            if(!jwt.hasClaim("roles")) {
+                return emptyList()
+            }
+
             val resourceAccess: List<Any> = jwt.getClaim("roles")
 
             if(resourceAccess.isEmpty()) {

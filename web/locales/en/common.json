@@ -8,5 +8,6 @@
     "accessDeniedText": "You must login to view this page's content.",
     "name": "Name",
     "race": "Race",
-    "profession": "Profession"
+    "profession": "Profession",
+    "email": "Email"
 }

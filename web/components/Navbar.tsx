@@ -86,6 +86,8 @@ function UserMenu(props) {
 }
 
 function GuestMenu() {
+    const { t } = useTranslation('common')
+
     return (
         <div>
             <a onClick={() => signIn("keycloak", { callbackUrl: "/profile" })} className="btn btn-outline-primary">Login</a>

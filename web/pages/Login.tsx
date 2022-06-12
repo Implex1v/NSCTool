@@ -19,14 +19,14 @@ export default function Login() {
                 <div className="col-md-4">
                     <div className="alert alert-info">
                         <h4>Before logging-in</h4>
-                        <p>You will be redirected to a page where you need to enter your credentials used on the <Link href="/register"><a>register</a></Link> form.</p>
+                        <p>You will be redirected to a page where you need to enter your credentials used on the <Link href="/Register"><a>register</a></Link> form.</p>
                     </div>
 
                     <button type="button" onClick={ () => login() } className="btn btn-primary btn-block mb-4 w-100">Login</button>
                     <div className="text-center">
                         <p>
                             Not a member?{' '}
-                            <Link href="/register">
+                            <Link href="/Register">
                                 <a>register</a>
                             </Link>
                         </p>

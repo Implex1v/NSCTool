@@ -17,7 +17,7 @@ export default function Layout({children, title=""}) {
                 <title>NSCTool - {title}</title>
             </Head>
 
-            <Navbar />
+            <Navbar status session />
 
             <div className="main container-xl text-light mt-10">
                 <div className="row">

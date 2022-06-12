@@ -1,10 +1,10 @@
 name: api-client/js
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - "api-client/js/**"
+  # push:
+  #   branches:
+  #     - main
+  #   paths:
+  #     - "api-client/js/**"
   workflow_dispatch:
 
 defaults:

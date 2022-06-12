@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function CharacterRow({ character }) {
+export default function CharacterRow({character}) {
     return (
         <tr className="text-white">
             <td>
