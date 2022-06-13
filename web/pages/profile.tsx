@@ -7,15 +7,11 @@ import CharacterTable from "../components/characters/CharacterTable";
 import {Table} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import {createApiClient} from "../lib/ApiClient";
+import {AuthOption} from "../lib/auth";
 
 export default function Profile() {
     const { t } = useTranslation('common');
-    const { data: session, status } = useSession({
-        required: true,
-        onUnauthenticated() {
-            return (<AccessDenied />)
-        }
-    })
+    const { data: session, status } = useSession()
     const [ characters, setCharacters ] = useState(null)
     const [ isLoading, setLoading ] = useState(false)
 
@@ -79,4 +75,8 @@ export default function Profile() {
             </div>
         </Layout>
     )
+}
+
+Profile.auth = {
+    auth: AuthOption.Required,
 }

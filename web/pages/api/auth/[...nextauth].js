@@ -1,5 +1,4 @@
 import NextAuth from "next-auth"
-import {getEnvironmentData} from "worker_threads";
 import KeycloakProvider from "next-auth/providers/keycloak";
 import * as jose from "jose";
 
@@ -9,7 +8,7 @@ const CLIENT_SECRET = process.env.APP_AUTH_CLIENT_SECRET
 
 export default NextAuth({
     // Configure one or more authentication providers
-    debug: true,
+    debug: false,
     providers: [
         KeycloakProvider({
             id: "keycloak",
@@ -48,9 +47,8 @@ export default NextAuth({
                 token.roles = await getRoles(account.access_token)
             }
 
+            // We have to rewrite the exp because it's retested every time
             token.exp = await getExp(token.accessToken)
-            console.log(Date.now() / 1000)
-            console.log(token.exp)
             if(Date.now() / 1000 >= token.exp) {
                 token = refreshAccessToken(token)
             }
