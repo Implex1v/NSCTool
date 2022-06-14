@@ -9,5 +9,14 @@
   "name": "Name",
   "race": "Rasse",
   "profession": "Profession",
-  "email": "E-Mail"
+  "email": "E-Mail",
+  "alreadyLoggedIn_title": "Bereits angemeldet",
+  "alreadyLoggedIn_text": "Du bist bereits angemeldet. Schau dich gerne auf der Seite um. Falls du dich verlaufen hast drücken den Knopf unten.",
+  "userCreated_text": "Dein Account wurde erfolgreich erstellt. Klicke auf den Login Knopf, um dich anzumelden.",
+  "success": "Erfolg",
+  "register_username": "Benutzername",
+  "register_email": "E-Mail",
+  "register_password": "Passwort",
+  "register_submit": "Registrieren",
+  "register_error": "Der Benutzer konnte nicht angelegt werden. Wahrscheinlich ist der Benutzername oder die E-Mail bereits in Verwendung oder versuche es später noch einmal."
 }

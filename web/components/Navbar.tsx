@@ -1,4 +1,4 @@
-import {signIn, useSession} from "next-auth/react";
+import {signIn, signOut, useSession} from "next-auth/react";
 import {Dropdown} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
@@ -77,7 +77,7 @@ function UserMenu(props) {
                     <FontAwesomeIcon icon={faPeopleGroup} />{t('myCharacters')}
                 </Dropdown.Item>
                 <Dropdown.Divider />
-                <Dropdown.Item href="/logout" className="text-danger">
+                <Dropdown.Item onClick={() => signOut({ callbackUrl: "/" })} className="text-danger">
                     <FontAwesomeIcon icon={faArrowRightFromBracket} />{t('logout')}
                 </Dropdown.Item>
             </Dropdown.Menu>

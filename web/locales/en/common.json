@@ -9,5 +9,14 @@
     "name": "Name",
     "race": "Race",
     "profession": "Profession",
-    "email": "Email"
+    "email": "Email",
+    "alreadyLoggedIn_title": "Already logged in",
+    "alreadyLoggedIn_text": "You are already logged in. Feel free to explore NSCTool further down the rabbit hole. In case you feel lost click the button below.",
+    "userCreated_text": "Your account has been created. Click the login button to log into NSCTool.",
+    "success": "Success",
+    "register_username": "Username",
+    "register_email": "Mail Address",
+    "register_password": "Password",
+    "register_submit": "Register",
+    "register_error": "Failed to register Account. Your E-Mail oder Username is already taken or try again later."
 }

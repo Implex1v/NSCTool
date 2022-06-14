@@ -6,6 +6,9 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
 import Layout from "../components/Layout";
 import {AuthOption} from "../lib/auth";
 import AccessDenied from "../components/unauthenticated";
+import AlreadyLoggedIn from "../components/AlreadyLoggedIn";
+import React from "react";
+import Error from "../components/Error";
 
 config.autoAddCss = false
 
@@ -15,13 +18,15 @@ export default function App({
 }) {
     return(
         <SessionProvider session={session}>
-            {Component.auth ? (
-                <Auth config={Component.auth}>
+            <ErrorBoundary>
+                { Component.auth ? (
+                    <Auth config={Component.auth}>
+                        <Component {...pageProps} />
+                    </Auth>
+                ) : (
                     <Component {...pageProps} />
-                </Auth>
-            ) : (
-                <Component {...pageProps} />
-            )}
+                )}
+            </ErrorBoundary>
         </SessionProvider>
     )
 }
@@ -46,7 +51,30 @@ function Auth({ children, config }) {
         return (<AccessDenied />)
     }
 
+    if (status === "authenticated" && config.auth === AuthOption.None) {
+        return (<AlreadyLoggedIn />)
+    }
+
     return children
 }
 
+class ErrorBoundary extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { error: null };
+    }
 
+    render() {
+        // @ts-ignore
+        if (this.state.error) {
+            // @ts-ignore
+            return (
+                // @ts-ignore
+                <Error errorMessage={this.state.error.message} />
+            )
+        }
+
+        // @ts-ignore
+        return this.props.children;
+    }
+}

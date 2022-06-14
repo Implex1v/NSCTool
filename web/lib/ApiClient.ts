@@ -1,7 +1,7 @@
 import {
     CharacterControllerApi,
     createConfiguration,
-    Middleware, RequestContext, ResponseContext, ServerConfiguration
+    Middleware, RequestContext, ResponseContext, ServerConfiguration, UserControllerApi
 } from "./client";
 import {ConfigurationParameters} from "./client/configuration";
 import {PromiseMiddlewareWrapper} from "./client/middleware";
@@ -19,6 +19,10 @@ export class ApiClient {
 
     characterApi() {
         return new CharacterControllerApi(createConfiguration(this.config));
+    }
+
+    userApi() {
+        return new UserControllerApi(createConfiguration(this.config))
     }
 }
 
