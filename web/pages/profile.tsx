@@ -2,7 +2,7 @@ import {useSession} from "next-auth/react";
 import Layout from "../components/Layout";
 import Head from "next/head";
 import useTranslation from "next-translate/useTranslation";
-import AccessDenied from "../components/unauthenticated";
+import AccessDenied from "../components/errors/AccessDenied";
 import CharacterTable from "../components/characters/CharacterTable";
 import {Table} from "react-bootstrap";
 import {useEffect, useState} from "react";

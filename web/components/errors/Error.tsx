@@ -1,4 +1,4 @@
-import Layout from "./Layout";
+import Layout from "../Layout";
 import useTranslation from "next-translate/useTranslation";
 
 export default function Error({ errorMessageKey }) {

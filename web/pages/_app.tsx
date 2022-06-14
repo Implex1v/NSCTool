@@ -5,10 +5,10 @@ import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import Layout from "../components/Layout";
 import {AuthOption} from "../lib/auth";
-import AccessDenied from "../components/unauthenticated";
-import AlreadyLoggedIn from "../components/AlreadyLoggedIn";
+import AccessDenied from "../components/errors/AccessDenied";
+import AlreadyLoggedIn from "../components/errors/AlreadyLoggedIn";
 import React from "react";
-import Error from "../components/Error";
+import Error from "../components/errors/Error";
 
 config.autoAddCss = false
 

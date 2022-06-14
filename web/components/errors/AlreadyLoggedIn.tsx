@@ -1,4 +1,4 @@
-import Layout from "./Layout";
+import Layout from "../Layout";
 import Link from "next/link";
 import useTranslation from "next-translate/useTranslation";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -14,7 +14,7 @@ export default function AlreadyLoggedIn() {
                         <h4 className="alert-heading">{t('alreadyLoggedIn_title')}</h4>
                         <p>{t('alreadyLoggedIn_text')}</p>
                     </div>
-                    <Link href="/profile">
+                    <Link href="/pages/profile">
                         <a className="btn btn-primary w-100">
                             <FontAwesomeIcon icon={faUser} />
                             {t('profile')}

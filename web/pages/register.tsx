@@ -6,7 +6,7 @@ import {createApiClient} from "../lib/ApiClient";
 import {CreateUserRequest} from "../lib/client";
 import InformationBox from "../components/InformationBox";
 import {Input, InputEmail, InputPassword, InputText, InputType} from "../components/forms/Input";
-import Error from "../components/Error";
+import Error from "../components/errors/Error";
 import useTranslation from "next-translate/useTranslation";
 
 export default function Register() {
