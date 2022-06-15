@@ -24,9 +24,7 @@ export default function Profile() {
                 setCharacters(data)
                 setLoading(false)
             })
-    }, [status])
-
-    console.log(session)
+    }, [status, session])
 
     if(!session) {
         return (

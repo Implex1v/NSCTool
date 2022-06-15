@@ -11,7 +11,7 @@ export default function Characters() {
     const { data: session, status } = useSession()
     const { t } = useTranslation('common');
     const [ characters, setCharacters ] = useState(null)
-    const [ isLoading, setLoading ] = useState(false)
+    const [ _, setLoading ] = useState(false)
 
     useEffect(() => {
         if(status === "loading") {
@@ -26,7 +26,7 @@ export default function Characters() {
                 setCharacters(data)
                 setLoading(false)
             })
-    }, [status])
+    }, [status, session])
 
     return (
         <Layout>

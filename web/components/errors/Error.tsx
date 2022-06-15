@@ -1,5 +1,6 @@
 import Layout from "../Layout";
 import useTranslation from "next-translate/useTranslation";
+import Image from "next/image";
 
 export default function Error({ errorMessageKey }) {
     const { t } = useTranslation("common")
@@ -10,7 +11,7 @@ export default function Error({ errorMessageKey }) {
                     <div className="alert alert-danger" role="alert">
                         <h4 className="alert-heading">Error</h4>
                         <p>{t(errorMessageKey)}</p>
-                        <img src="https://http.cat/500" className="col-md-12" alt="meow" />
+                        <Image src="https://http.cat/500" className="col-md-12" alt="meow" />
                     </div>
                 </div>
             </div>

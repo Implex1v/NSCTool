@@ -5,7 +5,7 @@ import {useState} from "react";
 import {createApiClient} from "../lib/ApiClient";
 import {CreateUserRequest} from "../lib/client";
 import InformationBox from "../components/InformationBox";
-import {Input, InputEmail, InputPassword, InputText, InputType} from "../components/forms/Input";
+import {InputEmail, InputPassword, InputText} from "../components/forms/Input";
 import Error from "../components/errors/Error";
 import useTranslation from "next-translate/useTranslation";
 
@@ -26,10 +26,11 @@ export default function Register() {
         user.email = email
 
         try {
+            // TODO: maybe move call to backend and protect /register endpoint with api-management role.
             createApiClient(null, null)
                 .userApi()
                 .create(user)
-                .catch((e) => { console.log(e); setError(e) })
+                .catch((e) => { setError(e) })
                 .then(() => setCreated(true))
         } catch (e) {
             setError(e)

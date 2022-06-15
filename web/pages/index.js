@@ -1,11 +1,11 @@
 import Head from 'next/head'
-import Layout, { siteTitle } from '../components/Layout'
+import Layout from '../components/Layout'
 
 export default function Home() {
   return (
     <Layout>
       <Head>
-        <title>{siteTitle}</title>
+        <title>Home</title>
       </Head>
     </Layout>
   )
