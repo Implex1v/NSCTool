@@ -2,7 +2,9 @@ version: "3.7"
 
 services:
   api:
+    # on local test environment: no traefik. instead port mapping 
     ports: ["7090:8080"]
+    # a dummy keycloak container with some test users/passwords
     environment:
       APP_KEYCLOAK_ADMIN_BASEURI: http://keycloak:8180
 

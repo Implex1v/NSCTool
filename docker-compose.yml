@@ -19,25 +19,31 @@ services:
     networks:
       - "nsctool"
 
+  # this builds or runs api/Dockerfile
   api:
+    # path of the builded docker image
     image: ${CR_BASE:-local}/api:${GITVERSION_SEMVER:-latest}
     restart: unless-stopped
     build: 
+      # path, where the Dockerfile is
       context: ./api/
+      # gives args for commit...
       args:
         <<: *build_args
-    volumes:
-      - "./api/build:/app/build"
     depends_on:
     - keycloak
+    # overrides the evironment variables defined in the Dockerfile
     environment:
       APP_DB_URL: jdbc:postgresql://db:5432/nsctool
       APP_DB_USERNAME: nsctool
       APP_DB_PASSWORD: ${API_DB_PASSWORD:-nsctool}
+    # for traefik
     labels:
       - "traefik.enable=true"
+      # trafik at subdomain "api."" goes to this container (to only exposed port)
       - "traefik.http.routers.nsctool-api.rule=Host(`api.${HOST:-localhost}`)"
       - "traefik.http.routers.nsctool-api.entrypoints=web"
+    # defines, which container can be seen. containers in networks can see each other
     networks:
       - "nsctool"
       - "db"
