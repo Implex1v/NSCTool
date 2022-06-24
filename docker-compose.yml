@@ -32,6 +32,7 @@ services:
         <<: *build_args
     depends_on:
     - keycloak
+    - db
     # overrides the evironment variables defined in the Dockerfile
     environment:
       APP_DB_URL: jdbc:postgresql://db:5432/nsctool
@@ -84,7 +85,7 @@ services:
     volumes:
       # TODO: use volume with permissions
       - "/opt/docker/nsctool/keycloak/:/opt/keycloak/data/h2/"
-      - "/db/postgres/:/docker-entrypoint-initdb.d/"
+      #- "/db/postgres/:/docker-entrypoint-initdb.d/"
     networks:
       - nsctool
       - db

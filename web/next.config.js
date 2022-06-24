@@ -14,5 +14,8 @@ module.exports = nextTranslate({
     },
     sassOptions: {
         includePaths: [path.join(__dirname, 'styles')]
-    }
+    },
+    images: {
+        domains: ['http.cat'],
+    },
 })
