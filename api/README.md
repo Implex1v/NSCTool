@@ -16,6 +16,11 @@ For local development [h2 in memory](https://www.h2database.com/html/main.html) 
 
 If you want to run API locally by using docker, just run `docker-compose build && docker-compose up -d`
 
+## Debugging
+
+### Spring
+To run Spring in debug mode just append `--debug` as a program argument e.g. in IntelliJ run config.
+
 ## Documentation
 
 ### OpenAPI

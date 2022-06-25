@@ -6,6 +6,13 @@ To run the development server run:
 npm run dev
 ```
 
+You can start db and keycloak in docker by running:
+```shell
+docker-compose up db keycloak
+```
+Sadly, you need to run the API locally without docker, because the issuer `iss` is wrong.
+This is caused by the fact, that the web is running locally and the other services in docker. 
+
 ## CSS & HTML
 
 We are using Bootstrap as a CSS Framework.

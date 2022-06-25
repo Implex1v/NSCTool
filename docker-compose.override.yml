@@ -10,6 +10,12 @@ services:
 
   web:
     ports: ["7080:3000"]
+    environment:
+      NEXTAUTH_URL: http://localhost:3000
+      NEXTAUTH_SECRET: QMUr2DkBCE9PyYTJqrszTkVAhYShsHbL
+      APP_AUTH_CLIENT_ID: web
+      APP_AUTH_CLIENT_SECRET: a0l6upjfJP2RD54SC8F0lyy46fUZO0l1
+      APP_AUTH_URL: http://keycloak:8180
 
   db:
     ports:

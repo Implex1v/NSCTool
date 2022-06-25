@@ -16,6 +16,11 @@ spring:
     console:
       enabled: 'true'
 
+web:
+  routes:
+    auth:
+      whitelist: ${APP_WEB_ROUTES_AUTH_WHITELIST:actuator}
+
 server:
   error:
     whitelabel:
@@ -33,7 +38,15 @@ logging:
       springframework:
         web:
           client:
-            RestTemplate: DEBUG
+            RestTemplate: INFO
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - env
+          - health
 
 keycloak:
   admin:

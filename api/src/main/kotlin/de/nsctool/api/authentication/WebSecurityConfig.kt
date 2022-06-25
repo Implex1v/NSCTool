@@ -19,6 +19,9 @@ class WebSecurityConfig(
     @Value("\${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
     private lateinit var issuerUrl: String
 
+    @Value("\${web.routes.auth.whitelist}")
+    private lateinit var whitelist: String
+
     override fun configure(http: HttpSecurity?) {
         http ?: throw IllegalStateException("http security is null")
 
@@ -30,7 +33,7 @@ class WebSecurityConfig(
             .authorizeHttpRequests { auth ->
 
                 auth
-                    .antMatchers("/health", "/doc/**", "/test", "/error", "/login", "/characters/**", "/users/**")
+                    .antMatchers("/health", "/doc/**", "/test", "/error", "/login", "/characters/**", "/users/**", *authWhitelist())
                         .permitAll().and()
                         .csrf().disable()
 
@@ -50,4 +53,11 @@ class WebSecurityConfig(
 
     @Bean
     fun authenticationFailureHandler(): AuthenticationFailureHandler = authErrorHandler
+
+    private fun authWhitelist(): Array<String> {
+        return whitelist
+            .split(",")
+            .filter { it.isNotBlank() }
+            .map { "/$it/**" }.toTypedArray()
+    }
 }
