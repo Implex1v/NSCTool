@@ -20,7 +20,7 @@ export default function Navbar() {
     return(
         <nav className="navbar navbar-expand-md fixed-top navbar-dark bg-black">
             <div className="container-fluid">
-                <a href="#" className="navbar-brand">
+                <a href="/" className="navbar-brand">
                     <FontAwesomeIcon icon={faDungeon} />NSCTool
                 </a>
                 <div className="d-flex">
