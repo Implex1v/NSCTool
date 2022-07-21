@@ -17,21 +17,21 @@ jobs:
       cr_token: ${{ secrets.CR_TOKEN }}
       cr_user: ${{ secrets.CR_USER }}
 
-  deploy:
-    uses: Implex1v/NSCTool/.github/workflows/_deploy.yml@main
-    needs: ["build"]
-    with:
-      stage: dev
-    secrets:
-      ssh_priv_key: ${{ secrets.SERVER_SSH_DEV }}
-      slack_webhook: ${{ secrets.SLACK_GITHUB_DEV }}
-      host: ${{ secrets.APP_HOST_DEV }}
-      cr: ${{ secrets.CR_HOST }}
-      apiDbPassword: ${{ secrets.API_DB_PASSWORD }}
-      app_keycloak_admin_realm: ${{ secrets.APP_KEYCLOAK_ADMIN_REALM }}
-      app_keycloak_admin_username: ${{ secrets.APP_KEYCLOAK_ADMIN_USERNAME }}
-      app_keycloak_admin_password: ${{ secrets.APP_KEYCLOAK_ADMIN_PASSWORD }}
-      app_keycloak_admin_client_id: ${{ secrets.APP_KEYCLOAK_ADMIN_CLIENT_ID }}
-      app_keycloak_admin_client_secret: ${{ secrets.APP_KEYCLOAK_ADMIN_CLIENT_SECRET }}
-      keycloak_admin: ${{ secrets.KEYCLOAK_ADMIN }}
-      keycloak_admin_password: ${{ secrets.KEYCLOAK_ADMIN_PASSWORD }}
+#  deploy:
+#    uses: Implex1v/NSCTool/.github/workflows/_deploy.yml@main
+#    needs: ["build"]
+#    with:
+#      stage: dev
+#    secrets:
+#      ssh_priv_key: ${{ secrets.SERVER_SSH_DEV }}
+#      slack_webhook: ${{ secrets.SLACK_GITHUB_DEV }}
+#      host: ${{ secrets.APP_HOST_DEV }}
+#      cr: ${{ secrets.CR_HOST }}
+#      apiDbPassword: ${{ secrets.API_DB_PASSWORD }}
+#      app_keycloak_admin_realm: ${{ secrets.APP_KEYCLOAK_ADMIN_REALM }}
+#      app_keycloak_admin_username: ${{ secrets.APP_KEYCLOAK_ADMIN_USERNAME }}
+#      app_keycloak_admin_password: ${{ secrets.APP_KEYCLOAK_ADMIN_PASSWORD }}
+#      app_keycloak_admin_client_id: ${{ secrets.APP_KEYCLOAK_ADMIN_CLIENT_ID }}
+#      app_keycloak_admin_client_secret: ${{ secrets.APP_KEYCLOAK_ADMIN_CLIENT_SECRET }}
+#      keycloak_admin: ${{ secrets.KEYCLOAK_ADMIN }}
+#      keycloak_admin_password: ${{ secrets.KEYCLOAK_ADMIN_PASSWORD }}
