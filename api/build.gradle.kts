@@ -44,6 +44,7 @@ dependencies {
 	runtimeOnly("io.jsonwebtoken:jjwt-impl:$jwtVersion")
 	runtimeOnly("io.jsonwebtoken:jjwt-jackson:$jwtVersion")
 
+	testImplementation("com.tngtech.archunit:archunit-junit5:1.0.0-rc1")
 	testImplementation("io.mockk:mockk:$mockkVersion")
 	testImplementation("com.ninja-squad:springmockk:$springMockVersion")
 	testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")

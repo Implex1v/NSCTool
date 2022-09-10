@@ -2,16 +2,15 @@ package de.nsctool.api.controller
 
 import de.nsctool.api.authentication.keycloak.Role
 import de.nsctool.api.authentication.keycloak.KeycloakClient
-import de.nsctool.api.controller.exceptions.BadRequestException
-import de.nsctool.api.controller.exceptions.NotFoundException
-import de.nsctool.api.controller.exceptions.UnauthorizedException
+import de.nsctool.api.exceptions.BadRequestException
+import de.nsctool.api.exceptions.NotFoundException
+import de.nsctool.api.exceptions.UnauthorizedException
 import de.nsctool.api.model.User
 import de.nsctool.api.repository.UserRepository
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.client.HttpClientErrorException.Unauthorized
 import javax.servlet.http.HttpServletRequest
 
 @RestController

@@ -2,16 +2,14 @@ package de.nsctool.api.controller
 
 import de.nsctool.api.authentication.keycloak.Role
 import de.nsctool.api.authentication.keycloak.KeycloakClient
-import de.nsctool.api.controller.exceptions.BadRequestException
-import de.nsctool.api.controller.exceptions.NotFoundException
-import de.nsctool.api.controller.exceptions.UnauthorizedException
+import de.nsctool.api.exceptions.BadRequestException
+import de.nsctool.api.exceptions.NotFoundException
+import de.nsctool.api.exceptions.UnauthorizedException
 import de.nsctool.api.model.User
 import de.nsctool.api.repository.UserRepository
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.mockk.*
-import io.mockk.InternalPlatformDsl.toStr
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken

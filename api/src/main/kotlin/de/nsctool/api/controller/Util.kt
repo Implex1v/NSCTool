@@ -1,8 +1,8 @@
 package de.nsctool.api.controller
 
 import de.nsctool.api.authentication.keycloak.Role
-import de.nsctool.api.controller.exceptions.BadRequestException
-import de.nsctool.api.controller.exceptions.UnauthorizedException
+import de.nsctool.api.exceptions.BadRequestException
+import de.nsctool.api.exceptions.UnauthorizedException
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken
 import java.util.UUID
 import javax.servlet.http.HttpServletRequest

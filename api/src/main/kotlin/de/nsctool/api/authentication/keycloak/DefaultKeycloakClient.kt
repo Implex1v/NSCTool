@@ -1,6 +1,6 @@
 package de.nsctool.api.authentication.keycloak
 
-import de.nsctool.api.controller.exceptions.BadRequestException
+import de.nsctool.api.exceptions.BadRequestException
 import de.nsctool.api.controller.parseUUIDOrThrow
 import org.keycloak.admin.client.CreatedResponseUtil
 import org.keycloak.admin.client.Keycloak

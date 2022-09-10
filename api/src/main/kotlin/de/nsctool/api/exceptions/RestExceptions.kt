@@ -1,4 +1,4 @@
-package de.nsctool.api.controller.exceptions
+package de.nsctool.api.exceptions
 
 import org.springframework.http.HttpStatus
 

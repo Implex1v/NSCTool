@@ -1,9 +1,7 @@
 package de.nsctool.api.controller
 
-import de.nsctool.api.controller.exceptions.BadRequestException
-import de.nsctool.api.controller.exceptions.NotFoundException
 import de.nsctool.api.model.Character
-import de.nsctool.api.repository.CharacterRepository
+import de.nsctool.api.service.CharacterService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -18,41 +16,27 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/characters")
 class CharacterController(
     @Autowired
-    private val repository: CharacterRepository
+    private val service: CharacterService
 ) {
-
     @ResponseBody
     @GetMapping()
-    fun getAll(): Iterable<Character> = repository.findAll()
+    fun getAll(): Iterable<Character> = service.findAll()
 
     @ResponseBody
     @GetMapping("/{uuid}")
     fun getById(@PathVariable uuid: String): Character {
         val mappedUUID = uuid.parseUUIDOrThrow()
-        return repository
-            .findById(mappedUUID)
-            .orElseThrow { NotFoundException("character not found") }
+        return service.findById(uuid = mappedUUID)
     }
 
     @ResponseBody
     @DeleteMapping("/{uuid}")
     fun delete(@PathVariable uuid: String) {
         val mappedUUID = uuid.parseUUIDOrThrow()
-
-        try {
-            repository.deleteById(mappedUUID)
-        } catch (e: IllegalArgumentException) {
-            throw NotFoundException("character not found")
-        }
+        return service.deleteById(uuid = mappedUUID)
     }
 
     @ResponseBody
     @PostMapping
-    fun create(@RequestBody character: Character): Character {
-        if (repository.existsById(character.id)) {
-            throw BadRequestException("character with id already exists")
-        }
-        return repository.save(character)
-    }
-
+    fun create(@RequestBody character: Character): Character = service.create(character = character)
 }
