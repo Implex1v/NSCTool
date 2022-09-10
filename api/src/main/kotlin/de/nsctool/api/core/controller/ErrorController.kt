@@ -1,6 +1,6 @@
-package de.nsctool.api.controller
+package de.nsctool.api.core.controller
 
-import de.nsctool.api.exceptions.RestException
+import de.nsctool.api.core.exceptions.RestException
 import org.slf4j.LoggerFactory
 import org.springframework.boot.autoconfigure.web.servlet.error.AbstractErrorController
 import org.springframework.boot.web.error.ErrorAttributeOptions

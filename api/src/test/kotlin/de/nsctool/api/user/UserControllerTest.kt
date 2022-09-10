@@ -1,19 +1,17 @@
-package de.nsctool.api.controller
+package de.nsctool.api.user
 
-import de.nsctool.api.authentication.keycloak.Role
 import de.nsctool.api.authentication.keycloak.KeycloakClient
-import de.nsctool.api.exceptions.BadRequestException
-import de.nsctool.api.exceptions.NotFoundException
-import de.nsctool.api.exceptions.UnauthorizedException
-import de.nsctool.api.model.User
-import de.nsctool.api.repository.UserRepository
+import de.nsctool.api.authentication.keycloak.Role
+import de.nsctool.api.core.exceptions.BadRequestException
+import de.nsctool.api.core.exceptions.NotFoundException
+import de.nsctool.api.core.exceptions.UnauthorizedException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.mockk.*
 import org.junit.jupiter.api.Test
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken
-import java.util.UUID
+import java.util.*
 import javax.servlet.http.HttpServletRequest
 
 internal class UserControllerTest {
@@ -46,7 +44,14 @@ internal class UserControllerTest {
 
     @Test
     fun `should handle create user error`() {
-        every { client.createUser(user.email, user.username, user.password, listOf(Role.USER)) } throws(BadRequestException("Foo"))
+        every {
+            client.createUser(
+                user.email,
+                user.username,
+                user.password,
+                listOf(Role.USER)
+            )
+        } throws(BadRequestException("Foo"))
         shouldThrowExactly<BadRequestException> { controller.create(user) }
     }
 

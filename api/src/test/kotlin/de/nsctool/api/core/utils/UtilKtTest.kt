@@ -1,8 +1,12 @@
-package de.nsctool.api.controller
+package de.nsctool.api.core.utils
 
 import de.nsctool.api.authentication.keycloak.Role
-import de.nsctool.api.exceptions.BadRequestException
-import de.nsctool.api.exceptions.UnauthorizedException
+import de.nsctool.api.core.controller.getUsername
+import de.nsctool.api.core.controller.hasUserRole
+import de.nsctool.api.core.controller.isUser
+import de.nsctool.api.core.controller.parseUUIDOrThrow
+import de.nsctool.api.core.exceptions.BadRequestException
+import de.nsctool.api.core.exceptions.UnauthorizedException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.shouldBe
 import io.mockk.every

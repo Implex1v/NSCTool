@@ -1,7 +1,7 @@
 package de.nsctool.api.authentication
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import de.nsctool.api.utils.TimestampUtil
+import de.nsctool.api.core.utils.TimestampUtil
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.security.core.AuthenticationException

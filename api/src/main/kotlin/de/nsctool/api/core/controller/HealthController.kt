@@ -1,10 +1,8 @@
-package de.nsctool.api.controller
+package de.nsctool.api.core.controller
 
-import org.springframework.security.access.annotation.Secured
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RestController
-import javax.servlet.http.HttpServletRequest
 
 @RestController
 class HealthController {

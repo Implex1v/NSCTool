@@ -1,4 +1,4 @@
-package de.nsctool.api.utils
+package de.nsctool.api.core.utils
 
 import org.springframework.stereotype.Component
 import java.time.OffsetDateTime

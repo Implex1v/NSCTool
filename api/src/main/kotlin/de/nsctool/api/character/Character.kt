@@ -1,4 +1,4 @@
-package de.nsctool.api.model
+package de.nsctool.api.character
 
 import org.hibernate.annotations.GenericGenerator
 import java.util.UUID

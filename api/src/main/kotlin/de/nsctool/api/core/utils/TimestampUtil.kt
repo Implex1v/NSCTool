@@ -1,4 +1,4 @@
-package de.nsctool.api.utils
+package de.nsctool.api.core.utils
 
 interface TimestampUtil {
     fun nowAsTimestamp(): String

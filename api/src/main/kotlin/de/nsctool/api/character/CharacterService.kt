@@ -1,9 +1,7 @@
-package de.nsctool.api.service
+package de.nsctool.api.character
 
-import de.nsctool.api.exceptions.BadRequestException
-import de.nsctool.api.exceptions.NotFoundException
-import de.nsctool.api.model.Character
-import de.nsctool.api.repository.CharacterRepository
+import de.nsctool.api.core.exceptions.BadRequestException
+import de.nsctool.api.core.exceptions.NotFoundException
 import org.springframework.stereotype.Service
 import java.util.UUID
 

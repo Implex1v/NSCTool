@@ -1,6 +1,5 @@
-package de.nsctool.api.repository
+package de.nsctool.api.user
 
-import de.nsctool.api.model.User
 import org.springframework.data.repository.CrudRepository
 import java.util.UUID
 

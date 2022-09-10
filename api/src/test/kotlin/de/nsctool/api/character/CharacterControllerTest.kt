@@ -1,21 +1,23 @@
-package de.nsctool.api.controller
+package de.nsctool.api.character
 
-import de.nsctool.api.exceptions.BadRequestException
-import de.nsctool.api.exceptions.NotFoundException
-import de.nsctool.api.service.CharacterService
+import de.nsctool.api.core.exceptions.BadRequestException
+import de.nsctool.api.core.exceptions.NotFoundException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
-import io.mockk.*
+import io.mockk.every
+import io.mockk.justRun
+import io.mockk.mockk
+import io.mockk.verify
 import org.junit.jupiter.api.Test
-import java.util.UUID
+import java.util.*
 
 class CharacterControllerTest (
 ) {
     private val service = mockk<CharacterService>()
     private val controller = CharacterController(service)
     private val chars = listOf(
-        de.nsctool.api.model.Character(), de.nsctool.api.model.Character()
+        Character(), Character()
     )
     private val uuid = UUID.randomUUID()
 

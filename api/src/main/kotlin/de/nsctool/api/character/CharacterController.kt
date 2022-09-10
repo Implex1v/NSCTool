@@ -1,8 +1,6 @@
-package de.nsctool.api.controller
+package de.nsctool.api.character
 
-import de.nsctool.api.model.Character
-import de.nsctool.api.service.CharacterService
-import org.springframework.beans.factory.annotation.Autowired
+import de.nsctool.api.core.controller.parseUUIDOrThrow
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -12,10 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RestController
 
-@RestController()
+@RestController
 @RequestMapping("/characters")
 class CharacterController(
-    @Autowired
     private val service: CharacterService
 ) {
     @ResponseBody
