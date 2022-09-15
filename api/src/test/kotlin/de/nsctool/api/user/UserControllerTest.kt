@@ -1,11 +1,13 @@
 package de.nsctool.api.user
 
-import de.nsctool.api.authentication.keycloak.KeycloakClient
 import de.nsctool.api.authentication.keycloak.Role
 import de.nsctool.api.core.exceptions.BadRequestException
 import de.nsctool.api.core.exceptions.NotFoundException
 import de.nsctool.api.core.exceptions.UnauthorizedException
 import io.kotest.assertions.throwables.shouldThrowExactly
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNot
+import io.kotest.matchers.shouldNotBe
 import io.mockk.*
 import org.junit.jupiter.api.Test
 import org.springframework.dao.EmptyResultDataAccessException
@@ -15,44 +17,35 @@ import java.util.*
 import javax.servlet.http.HttpServletRequest
 
 internal class UserControllerTest {
-    private val repository = spyk<UserRepository>()
-    private val client = spyk<KeycloakClient>()
-    private val controller = UserController(client, repository)
+    private val service = mockk<UserService>()
+    private val controller = UserController(service)
     private val user = UserController.CreateUserRequest("user", "user@example.com", "123456")
+    private val entity = User(userName = user.username, email = user.email, id = UUID.randomUUID())
     private val request = spyk<HttpServletRequest>()
     private val auth = mockk<JwtAuthenticationToken>()
     private val uuid = UUID.randomUUID()
 
     @Test
     fun `should create user`() {
-        val uuid = UUID.randomUUID()
-        every { client.createUser(user.username, user.email, user.password, listOf(Role.USER)) } returns uuid
-        justRun { client.resetPassword(uuid, user.password, false) }
-        justRun { client.addRealmRoleToUser(uuid, Role.USER) }
-        every { repository.save(any()) } returns User().apply {
-            userName = user.username
-            id = uuid
-            email = user.email
-        }
+        every { service.create(any(), any()) } returns entity
 
-        controller.create(user)
+        val actualUser = controller.create(user)
 
-        verify { client.createUser(user.username, user.email, user.password, listOf(Role.USER)) }
-        verify { client.resetPassword(uuid, user.password, false) }
-        verify { repository.save(any()) }
+        verify { service.create(any(), user.password) }
+
+        actualUser.userName shouldBe entity.userName
+        actualUser.email shouldBe entity.email
+        actualUser.id shouldNotBe null
     }
 
     @Test
     fun `should handle create user error`() {
         every {
-            client.createUser(
-                user.email,
-                user.username,
-                user.password,
-                listOf(Role.USER)
-            )
+            service.create(any(), any())
         } throws(BadRequestException("Foo"))
+
         shouldThrowExactly<BadRequestException> { controller.create(user) }
+        verify { service.create(any(), user.password) }
     }
 
     @Test
@@ -66,11 +59,10 @@ internal class UserControllerTest {
         shouldThrowExactly<UnauthorizedException> { controller.delete(request, uuid.toString()) }
 
         every { auth.authorities } returns listOf(SimpleGrantedAuthority(Role.ADMIN.value))
-        justRun { client.deleteUser(uuid) }
-        justRun { repository.deleteById(uuid) }
+        justRun { service.delete(uuid) }
         controller.delete(request, uuid.toString())
 
-        every { repository.deleteById(uuid) } throws EmptyResultDataAccessException(5)
-        shouldThrowExactly<NotFoundException> { controller.delete(request, uuid.toString()) }
+        every { service.delete(uuid) } throws EmptyResultDataAccessException(5)
+        shouldThrowExactly<EmptyResultDataAccessException> { controller.delete(request, uuid.toString()) }
     }
 }

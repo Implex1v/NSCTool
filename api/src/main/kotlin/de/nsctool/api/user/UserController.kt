@@ -17,31 +17,16 @@ import javax.servlet.http.HttpServletRequest
 @RestController
 @RequestMapping("/users")
 class UserController(
-    @Autowired val client: KeycloakClient,
-    @Autowired val repository: UserRepository,
+    val service: UserService
 ) {
     private val logger = LoggerFactory.getLogger(UserController::class.java)
 
     @PostMapping
     @ResponseBody
     //@Secured(value = [Roles.ROLE_MGMT])
-    fun create(@RequestBody user: CreateUserRequest): User {
-        try {
-            val userId = client
-                .createUser(user.username, user.email, user.password, listOf(Role.USER))
-
-            client.resetPassword(userId, user.password, false)
-            client.addRealmRoleToUser(userId, Role.USER)
-            logger.info("Created user '$userId' ('${user.username}')")
-            return User().apply {
-                id = userId
-                userName = user.username
-                email = user.email
-                repository.save(this)
-            }
-        } catch (ex: Exception) {
-            throw BadRequestException("Failed to create user", ex)
-        }
+    fun create(@RequestBody apiUser: CreateUserRequest): User {
+        val user = User(userName = apiUser.username, email = apiUser.email)
+        return service.create(user, apiUser.password)
     }
 
     @DeleteMapping("/{id}")
@@ -51,13 +36,7 @@ class UserController(
             throw UnauthorizedException("No permissions to delete user")
         }
 
-        client.deleteUser(uuid)
-
-        try {
-            repository.deleteById(uuid)
-        } catch (ex: EmptyResultDataAccessException) {
-            throw NotFoundException("User not found", ex)
-        }
+        service.delete(uuid)
     }
 
     class CreateUserRequest(val username: String, val email: String, val password: String)

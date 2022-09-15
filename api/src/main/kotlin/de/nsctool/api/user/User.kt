@@ -10,16 +10,13 @@ import javax.persistence.Table
 
 @Entity
 @Table(name = "users")
-class User {
+data class User(
     @Id
-    var id: UUID = UUID.randomUUID()
-
+    var id: UUID = UUID.randomUUID(),
     @Column(unique = true)
-    var userName: String = ""
-
+    var userName: String,
     @Column(unique = true)
-    var email: String = ""
-
+    var email: String,
     @OneToMany()
-    var characters: List<Character> = emptyList()
-}
+    var characters: List<Character> = emptyList(),
+)
