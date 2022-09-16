@@ -21,7 +21,9 @@ export default function Navbar() {
         <nav className="navbar navbar-expand-md fixed-top navbar-dark bg-black">
             <div className="container-fluid">
                 <Link href="/" className="navbar-brand">
-                    <FontAwesomeIcon icon={faDungeon} />NSCTool
+                    <a>
+                        <FontAwesomeIcon icon={faDungeon} />NSCTool
+                    </a>
                 </Link>
                 <div className="d-flex">
                     <ul className="navbar-nav">
