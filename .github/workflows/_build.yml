@@ -54,21 +54,22 @@ jobs:
       GIT_COMMIT: ${{ github.sha }}
       BUILD_VERSION: ${{ needs.version.outputs.semver }}
     steps:
-      #------
+      #------ 
       - uses: actions/checkout@v3
+      # Disable push and login until new CR is available 
       # https://github.com/docker/login-action
-      - name: docker login
-        uses: docker/login-action@v1
-        with:
-          registry: ${{ secrets.cr }}
-          username: ${{ secrets.cr_user }}
-          password: ${{ secrets.cr_token }}
+      #- name: docker login
+      #  uses: docker/login-action@v1
+      #  with:
+      #    registry: ${{ secrets.cr }}
+      #    username: ${{ secrets.cr_user }}
+      #    password: ${{ secrets.cr_token }}
       - name: Build container image
         run: |
           docker-compose build ${COMPONENT}
-          docker-compose push ${COMPONENT}
-      - name: Retag to latest and push image
-        run: |
-          docker tag ${CR_BASE}/${COMPONENT}:${BUILD_VERSION} ${CR_BASE}/${COMPONENT}:latest
-          docker push ${CR_BASE}/${COMPONENT}:latest
+      #    docker-compose push ${COMPONENT}
+      #- name: Retag to latest and push image
+      #  run: |
+      #    docker tag ${CR_BASE}/${COMPONENT}:${BUILD_VERSION} ${CR_BASE}/${COMPONENT}:latest
+      #    docker push ${CR_BASE}/${COMPONENT}:latest
       
