@@ -55,22 +55,24 @@ export default function Register() {
 
     return (
         <Layout>
-            <h2 className="text-center mb-5">Registrieren</h2>
-            <div className="container d-flex justify-content-center">
-                <form className="col-md-4" onSubmit={(e) => register(e)}>
-                    <div className="mb-4">
-                        <InputText icon={faUser} setValue={setUsername} label={t("register_username")} required={true} />
-                    </div>
-                    <div className="mb-4">
-                        <InputEmail icon={faEnvelope} setValue={setEmail} label={t("register_email")} required={true} />
-                    </div>
-                    <div className="mb-5">
-                        <InputPassword icon={faKey} label={t("register_password")} required={true} setValue={setPassword}/>
-                    </div>
-                    <button type="submit" className="btn btn-primary w-100">
-                        {t("register_submit")}
-                    </button>
-                </form>
+            <div>
+                <h2 className="text-center mb-5">Registrieren</h2>
+                <div className="container d-flex justify-content-center">
+                    <form className="col-md-4" onSubmit={(e) => register(e)}>
+                        <div className="mb-4">
+                            <InputText icon={faUser} setValue={setUsername} label={t("register_username")} required={true} />
+                        </div>
+                        <div className="mb-4">
+                            <InputEmail icon={faEnvelope} setValue={setEmail} label={t("register_email")} required={true} />
+                        </div>
+                        <div className="mb-5">
+                            <InputPassword icon={faKey} label={t("register_password")} required={true} setValue={setPassword}/>
+                        </div>
+                        <button type="submit" className="btn btn-primary w-100">
+                            {t("register_submit")}
+                        </button>
+                    </form>
+                </div>
             </div>
         </Layout>
     )

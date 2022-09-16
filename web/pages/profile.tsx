@@ -38,36 +38,38 @@ export default function Profile() {
 
     return (
         <Layout>
-            <Head>
-                <title>{t('profile')}: { session.user.name }</title>
-            </Head>
-            <div className="container">
-                <h2>{t('profile')}: { session.user.name }</h2>
-                <div className="row pt-5">
-                    <div className="col-md-6"></div>
-                    <div className="col-md-6">
-                        <Table>
-                            <tbody>
-                                <tr className="profile-row">
-                                    <td>Id</td>
-                                    <td>{ session.user.id }</td>
-                                </tr>
-                                <tr className="profile-row">
-                                    <td>{t('name')}</td>
-                                    <td>{ session.user.name }</td>
-                                </tr>
-                                <tr className="profile-row">
-                                    <td>{t('email')}</td>
-                                    <td>{ session.user.email }</td>
-                                </tr>
-                            </tbody>
-                        </Table>
-                    </div>
-                    <div className="col-md-12">
-                        <div className="pt-5">
-                            <h4>{t('myCharacters')}</h4>
+            <div>
+                <Head>
+                    <title>{t('profile')}: { session.user.name }</title>
+                </Head>
+                <div className="container">
+                    <h2>{t('profile')}: { session.user.name }</h2>
+                    <div className="row pt-5">
+                        <div className="col-md-6"></div>
+                        <div className="col-md-6">
+                            <Table>
+                                <tbody>
+                                    <tr className="profile-row">
+                                        <td>Id</td>
+                                        <td>{ session.user.id }</td>
+                                    </tr>
+                                    <tr className="profile-row">
+                                        <td>{t('name')}</td>
+                                        <td>{ session.user.name }</td>
+                                    </tr>
+                                    <tr className="profile-row">
+                                        <td>{t('email')}</td>
+                                        <td>{ session.user.email }</td>
+                                    </tr>
+                                </tbody>
+                            </Table>
                         </div>
-                        <CharacterTable characters={characters} />
+                        <div className="col-md-12">
+                            <div className="pt-5">
+                                <h4>{t('myCharacters')}</h4>
+                            </div>
+                            <CharacterTable characters={characters} />
+                        </div>
                     </div>
                 </div>
             </div>

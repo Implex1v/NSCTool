@@ -20,9 +20,9 @@ export default function Navbar() {
     return(
         <nav className="navbar navbar-expand-md fixed-top navbar-dark bg-black">
             <div className="container-fluid">
-                <a href="/" className="navbar-brand">
+                <Link href="/" className="navbar-brand">
                     <FontAwesomeIcon icon={faDungeon} />NSCTool
-                </a>
+                </Link>
                 <div className="d-flex">
                     <ul className="navbar-nav">
                         <li className="nav-item">
@@ -86,8 +86,6 @@ function UserMenu(props) {
 }
 
 function GuestMenu() {
-    const { t } = useTranslation('common')
-
     return (
         <div>
             <a onClick={() => signIn("keycloak", { callbackUrl: "/profile" })} className="btn btn-outline-primary">Login</a>

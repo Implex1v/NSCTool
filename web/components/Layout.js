@@ -7,13 +7,15 @@ export default function Layout({children, title=""}) {
     return (
         <div className="layout">
             <Head>
-                <link rel="icon" href="/favicon.ico"/>
-                <meta
-                    name="description"
-                    content="A website for managing your NSCs of Pen and Paper games. Mainly focused on the german PnP game Das Schwarze Auge (DSA)"
-                />
-                <meta name="og:title" content={title}/>
-                <meta name="twitter:card" content="summary_large_image"/>
+                <div>
+                    <link rel="icon" href="/favicon.ico"/>
+                    <meta
+                        name="description"
+                        content="A website for managing your NSCs of Pen and Paper games. Mainly focused on the german PnP game Das Schwarze Auge (DSA)"
+                    />
+                    <meta name="og:title" content={title}/>
+                    <meta name="twitter:card" content="summary_large_image"/>
+                </div>
                 <title>NSCTool - {title}</title>
             </Head>
 
@@ -32,7 +34,7 @@ export default function Layout({children, title=""}) {
                         <div className="w-full mx-auto">
                             <p className="text-center">
                                 <FontAwesomeIcon icon={faDragon} />
-                                &copy; NSCTool 2022
+                                &copy; NSCTool {new Date().getFullYear()}
                             </p>
                         </div>
                     </div>

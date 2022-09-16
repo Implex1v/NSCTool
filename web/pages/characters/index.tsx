@@ -30,19 +30,21 @@ export default function Characters() {
 
     return (
         <Layout>
-            <Head>
-                <title>NSCTool Characters</title>
-            </Head>
-            <div className="container">
-                <div className="col-md-12 text-center">
-                    <h1>{t('characters')}</h1>
-                </div>
-                <div className="col-md-12">
-                    <div className="float-end">
-                        <CharacterAddButton />
+            <div>
+                <Head>
+                    <title>NSCTool Characters</title>
+                </Head>
+                <div className="container">
+                    <div className="col-md-12 text-center">
+                        <h1>{t('characters')}</h1>
                     </div>
+                    <div className="col-md-12">
+                        <div className="float-end">
+                            <CharacterAddButton />
+                        </div>
+                    </div>
+                    <CharacterTable characters={characters} />
                 </div>
-                <CharacterTable characters={characters} />
             </div>
         </Layout>
     )
