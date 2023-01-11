@@ -8,22 +8,24 @@ services:
   web:
     image: ${CR_BASE:-local}/web:${GITVERSION_SEMVER:-latest}
     restart: unless-stopped
+    ports: ["7080:3000"]
     build:
       context: ./web/
       args:
         <<: *build_args
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.nsctool-web.rule=Host(`web.${HOST:-localhost}`)"
-      - "traefik.http.routers.nsctool-web.entrypoints=web"
-    networks:
-      - "nsctool"
+    environment:
+      NEXTAUTH_URL: http://localhost:3000
+      NEXTAUTH_SECRET: QMUr2DkBCE9PyYTJqrszTkVAhYShsHbL
+      APP_AUTH_CLIENT_ID: web
+      APP_AUTH_CLIENT_SECRET: a0l6upjfJP2RD54SC8F0lyy46fUZO0l1
+      APP_AUTH_URL: http://keycloak:8180
 
   # this builds or runs api/Dockerfile
   api:
     # path of the builded docker image
     image: ${CR_BASE:-local}/api:${GITVERSION_SEMVER:-latest}
     restart: unless-stopped
+    ports: ["8080:8080"]
     build: 
       # path, where the Dockerfile is
       context: ./api/
@@ -35,31 +37,18 @@ services:
     - db
     # overrides the evironment variables defined in the Dockerfile
     environment:
+      APP_KEYCLOAK_ADMIN_BASEURI: http://keycloak:8180
       APP_DB_URL: jdbc:postgresql://db:5432/nsctool
       APP_DB_USERNAME: nsctool
-      APP_DB_PASSWORD: ${API_DB_PASSWORD:-nsctool}
-    # for traefik
-    labels:
-      - "traefik.enable=true"
-      # trafik at subdomain "api."" goes to this container (to only exposed port)
-      - "traefik.http.routers.nsctool-api.rule=Host(`api.${HOST:-localhost}`)"
-      - "traefik.http.routers.nsctool-api.entrypoints=web"
-    # defines, which container can be seen. containers in networks can see each other
-    networks:
-      - "nsctool"
-      - "db"
+      APP_DB_PASSWORD: nsctool
   
   db:
     image: postgres:14-alpine
     restart: unless-stopped
     environment:
-      POSTGRES_USER: nsctool
-      POSTGRES_PASSWORD: ${API_DB_PASSWORD:-nsctool}
+      PGADMIN_DEFAULT_EMAIL: admin@implex1v.de
+      PGADMIN_DEFAULT_PASSWORD: nsctool
       POSTGRES_DB: nsctool
-    volumes:
-      - "/opt/docker/nsctool/db/data:/var/lib/postgresql"
-    networks:
-      - "db"
 
   keycloak:
     image: quay.io/keycloak/keycloak:18.0
@@ -70,27 +59,11 @@ services:
       - --hostname auth.${HOST:-localhost}
       - --proxy edge
     environment:
-      KEYCLOAK_ADMIN: ${APP_KEYCLOAK_USERNAME:-admin}
-      KEYCLOAK_ADMIN_PASSWORD: ${APP_KEYCLOAK_PASSWORD:-admin}
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
       # DB_VENDOR: POSTGRES
       # DB_ADDR: db
       # DB_DATABASE: keycloak
       # DB_USER: keycloak
       # DB_SCHEMA: public
       # DB_PASSWORD: password
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.nsctool-auth.rule=Host(`auth.${HOST:-localhost}`)"
-      - "traefik.http.routers.nsctool-auth.entrypoints=web"
-    volumes:
-      # TODO: use volume with permissions
-      - "/opt/docker/nsctool/keycloak/:/opt/keycloak/data/h2/"
-      #- "/db/postgres/:/docker-entrypoint-initdb.d/"
-    networks:
-      - nsctool
-      - db
-
-networks:
-  nsctool:
-    external: true
-  db:
