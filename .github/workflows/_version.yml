@@ -1,0 +1,30 @@
+name: _version
+
+on:
+  workflow_call:
+    inputs:
+      component:
+        description: The component to build
+        type: string
+        required: true
+    outputs:
+      version:
+        value: ${{ jobs.version.outputs.version }}
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  version:
+    runs-on: ubuntu-22.04
+    outputs:
+      version: ${{ steps.version.outputs.VERSION }}
+    steps:
+      #------ 
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - id: version
+        run: |
+          echo "VERSION=$(curl -Ls https://solugo.github.io/gitversion/run.sh | ARGS='./ -c ${{ inputs.component }} --dirty_ignore' bash)" >> $GITHUB_OUTPUT

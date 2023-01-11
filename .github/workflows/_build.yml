@@ -7,6 +7,10 @@ on:
         description: The component to build
         type: string
         required: true
+      version:
+        description: The current version
+        type: string
+        required: true
     secrets:
       cr:
         description: The container registry to use (default is GitHub)
@@ -26,50 +30,28 @@ env:
   COMPONENT: ${{ inputs.component }}
 
 jobs:
-  version:
-    runs-on: ubuntu-20.04
-    outputs:
-      semver: ${{ steps.gitversion.outputs.semVer }}
-    steps:
-      - name: Install GitVersion
-        uses: gittools/actions/gitversion/setup@v0.9.13
-        with:
-          versionSpec: "5.x"
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0 # For gitversion
-      # https://github.com/GitTools/actions/blob/main/docs/examples/github/gitversion/index.md
-      - id: gitversion
-        name: Determine Version
-        uses: gittools/actions/gitversion/execute@v0.9.13
-        with:
-          useConfigFile: true
-
   build:
-    runs-on: ubuntu-20.04
-    needs: version
+    runs-on: ubuntu-22.04
     env:
-      CR_BASE: "${{ secrets.cr }}/nsctool"
-      GITVERSION_SEMVER: ${{ needs.version.outputs.semver }}
+      CR_BASE: ${{ secrets.cr }}
+      GITVERSION_SEMVER: ${{ inputs.version }}
       GIT_COMMIT: ${{ github.sha }}
-      BUILD_VERSION: ${{ needs.version.outputs.semver }}
+      BUILD_VERSION: ${{ inputs.version }}
     steps:
       #------ 
       - uses: actions/checkout@v3
-      # Disable push and login until new CR is available 
       # https://github.com/docker/login-action
-      #- name: docker login
-      #  uses: docker/login-action@v1
-      #  with:
-      #    registry: ${{ secrets.cr }}
-      #    username: ${{ secrets.cr_user }}
-      #    password: ${{ secrets.cr_token }}
+      - name: docker login
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ secrets.cr }}
+          username: ${{ secrets.cr_user }}
+          password: ${{ secrets.cr_token }}
       - name: Build container image
         run: |
           docker-compose build ${COMPONENT}
-      #    docker-compose push ${COMPONENT}
-      #- name: Retag to latest and push image
-      #  run: |
-      #    docker tag ${CR_BASE}/${COMPONENT}:${BUILD_VERSION} ${CR_BASE}/${COMPONENT}:latest
-      #    docker push ${CR_BASE}/${COMPONENT}:latest
-      
+          docker-compose push ${COMPONENT}
+      - name: Retag to latest and push image
+        run: |
+          docker tag ${CR_BASE}/nsctool-${COMPONENT}:${BUILD_VERSION} ${CR_BASE}/nsctool-${COMPONENT}:latest
+          docker push ${CR_BASE}/nsctool-${COMPONENT}:latest

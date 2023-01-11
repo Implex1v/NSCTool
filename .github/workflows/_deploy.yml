@@ -3,92 +3,75 @@ name: _deploy
 on:
   workflow_call:
     inputs:
-      stage:
-        description: The stage to deploy to
-        required: false
+      component:
+        description: The component to build
         type: string
-        default: dev
+        required: true
+      version:
+        description: The version to build
+        type: string
+        required: true
     secrets:
-      ssh_priv_key:
-        description: The private ssh key to connect to the host
-        required: true
-      slack_webhook:
-        description: The wslack webhook used for notifications
-        required: true
-      host:
-        description: The host to deploy to
-        required: true
-      apiDbPassword:
-        description: DB password for the database
-        required: true
       cr:
-        description: The cr host
+        description: The container registry to use (default is GitHub)
         required: true
-      app_keycloak_admin_realm:
-        description: The cr host
+      cr_token:
+        description: The container registry token
         required: true
-      app_keycloak_admin_username:
-        description: The cr host
+      cr_user:
+        description: The registry user
         required: true
-      app_keycloak_admin_password:
-        description: The cr host
+      domain:
+        description: The domain to deploy to
         required: true
-      app_keycloak_admin_client_id:
-        description: The cr host
+      kube_config:
+        description: The kube config
         required: true
-      app_keycloak_admin_client_secret:
-        description: The cr host
-        required: true
-      keycloak_admin:
-        description: The cr host
-        required: true
-      keycloak_admin_password:
-        description: The cr host
-        required: true  
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  COMPONENT: ${{ inputs.component }}
 
 jobs:
   deploy:
-    runs-on: ubuntu-20.04
-    concurrency: 
-      group: deploy-dev
-      cancel-in-progress: false
+    runs-on: ubuntu-22.04
+    env:
+      VERSION: ${{ inputs.version }}
+      NAMESPACE: nsctool
     steps:
-    - uses: actions/checkout@v3
-    - name: Run playbook
-      uses: dawidd6/action-ansible-playbook@v2
-      env:
-        APP_KEYCLOAK_ADMIN_REALM: ${{ secrets.app_keycloak_admin_realm }}
-        APP_KEYCLOAK_ADMIN_USERNAME: ${{ secrets.app_keycloak_admin_username }}
-        APP_KEYCLOAK_ADMIN_PASSWORD: ${{ secrets.app_keycloak_admin_password }}
-        APP_KEYCLOAK_ADMIN_CLIENT_ID: ${{ secrets.app_keycloak_admin_client_id }}
-        APP_KEYCLOAK_ADMIN_CLIENT_SECRET: ${{ secrets.app_keycloak_admin_client_secret }}
-        KEYCLOAK_ADMIN: ${{ secrets.keycloak_admin }}
-        KEYCLOAK_ADMIN_PASSWORD: ${{ secrets.keycloak_admin_password }}
-        CR: ${{ secrets.cr }}
-        APP_HOST: ${{ secrets.host }}
-        APP_API_DB_PASSWORD: ${{ secrets.api_db_password }}
-      with:
-        playbook: playbooks/update.yml
-        directory: ./_devops/ansible
-        requirements: requirements.yml
-        # Optional, SSH private key of the machine
-        key: ${{ secrets.ssh_priv_key }}
-        # Optional, literal inventory file contents
-        inventory: |
-          [all]
-          ${{ secrets.host }}
-  
-  slack:
-    runs-on: ubuntu-20.04
-    needs: ["deploy"]
-    if: always() && needs.deploy.result == 'failure'
-    steps:
-    - name: notify
-      uses: rtCamp/action-slack-notify@v2
-      env:
-        SLACK_WEBHOOK: ${{ secrets.slack_webhook }}
-        SLACK_USERNAME: GitHub
-        SLACK_MESSAGE: "Failed to deploy NSCTool on ${{ inputs.stage }} :cry: :pray:."
-        SLACK_TITLE: Deployment failed
-        SLACK_ICON: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
-        SLACK_COLOR: ${{ needs.deploy.result }}
+      - uses: actions/checkout@v3
+      - name: Kubernetes login
+        run: |
+          mkdir ~/.kube
+          echo "${{ secrets.kube_config }}" > ~/.kube/config
+      - name: Render values.yaml
+        uses: cuchi/jinja2-action@v1.2.0
+        with:
+          template: ${{ inputs.component }}/chart/values.j2
+          output_file: ${{ inputs.component }}/chart/values.override.yaml
+          strict: true
+          variables: |
+            base_domain=${{ secrets.domain }}
+            image=${{ secrets.cr }}/nsctool-${{ inputs.component }}
+      - name: Kubernetes deploy
+        working-directory: ${{ inputs.component }}/chart
+        id: helm_deploy
+        run: |
+          set -ex
+          helm dependency update
+          helm lint .
+          helm package \
+            --version "${VERSION}" \
+            --app-version "${VERSION}" \
+            .
+          helm upgrade -i --wait \
+            -n ${NAMESPACE} --create-namespace \
+            --version ${VERSION} \
+            -f values.yaml \
+            -f values.override.yaml \
+            ${COMPONENT} \
+            ${COMPONENT}-${VERSION}.tgz
+          helm test ${COMPONENT} -n ${NAMESPACE} --logs --timeout 6m0s
