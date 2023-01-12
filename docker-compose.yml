@@ -6,8 +6,7 @@ x-buildargs: &build_args
 
 services:
   web:
-    image: ${CR_BASE:-local}/web:${GITVERSION_SEMVER:-latest}
-    restart: unless-stopped
+    image: ${CR_BASE:-local}/nsctool-web:${GITVERSION_SEMVER:-latest}
     ports: ["7080:3000"]
     build:
       context: ./web/
@@ -23,8 +22,7 @@ services:
   # this builds or runs api/Dockerfile
   api:
     # path of the builded docker image
-    image: ${CR_BASE:-local}/api:${GITVERSION_SEMVER:-latest}
-    restart: unless-stopped
+    image: ${CR_BASE:-local}/nsctool-api:${GITVERSION_SEMVER:-latest}
     ports: ["8080:8080"]
     build: 
       # path, where the Dockerfile is
