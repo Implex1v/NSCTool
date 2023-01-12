@@ -3,16 +3,12 @@ package de.nsctool.api.user
 import de.nsctool.api.authentication.keycloak.KeycloakClient
 import de.nsctool.api.authentication.keycloak.Role
 import de.nsctool.api.core.exceptions.BadRequestException
-import de.nsctool.api.core.exceptions.NotFoundException
-import de.nsctool.api.core.exceptions.UnauthorizedException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.mockk.*
+import jakarta.servlet.http.HttpServletRequest
 import org.junit.jupiter.api.Test
-import org.springframework.dao.EmptyResultDataAccessException
-import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken
 import java.util.*
-import javax.servlet.http.HttpServletRequest
 
 class UserServiceTest {
     private val client = mockk<KeycloakClient>()
