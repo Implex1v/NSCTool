@@ -14,7 +14,7 @@ class WebConfig: WebMvcConfigurer {
             .addMapping("/**")
             .allowedOrigins("*")
             .allowedHeaders("*")
-            .allowedMethods(HttpMethod.GET.name, HttpMethod.POST.name, HttpMethod.PUT.name, HttpMethod.DELETE.name)
+            .allowedMethods("*")
             .allowCredentials(false)
             .maxAge(3_600)
     }

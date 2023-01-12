@@ -1,18 +1,13 @@
 package de.nsctool.api.user
 
 import de.nsctool.api.authentication.keycloak.Role
-import de.nsctool.api.authentication.keycloak.KeycloakClient
 import de.nsctool.api.core.controller.hasUserRole
 import de.nsctool.api.core.controller.isUser
 import de.nsctool.api.core.controller.parseUUIDOrThrow
-import de.nsctool.api.core.exceptions.BadRequestException
-import de.nsctool.api.core.exceptions.NotFoundException
 import de.nsctool.api.core.exceptions.UnauthorizedException
+import jakarta.servlet.http.HttpServletRequest
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.web.bind.annotation.*
-import javax.servlet.http.HttpServletRequest
 
 @RestController
 @RequestMapping("/users")

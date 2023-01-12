@@ -3,9 +3,9 @@ package de.nsctool.api.core.controller
 import de.nsctool.api.authentication.keycloak.Role
 import de.nsctool.api.core.exceptions.BadRequestException
 import de.nsctool.api.core.exceptions.UnauthorizedException
+import jakarta.servlet.http.HttpServletRequest
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken
 import java.util.UUID
-import javax.servlet.http.HttpServletRequest
 
 fun String.parseUUIDOrThrow(): UUID {
     try {

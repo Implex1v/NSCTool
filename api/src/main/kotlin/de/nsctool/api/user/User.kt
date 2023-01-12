@@ -1,12 +1,12 @@
 package de.nsctool.api.user
 
 import de.nsctool.api.character.Character
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.Id
+import jakarta.persistence.OneToMany
+import jakarta.persistence.Table
 import java.util.UUID
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.OneToMany
-import javax.persistence.Table
 
 @Entity
 @Table(name = "users")
@@ -17,6 +17,6 @@ data class User(
     var userName: String,
     @Column(unique = true)
     var email: String,
-    @OneToMany()
+    @OneToMany
     var characters: List<Character> = emptyList(),
 )

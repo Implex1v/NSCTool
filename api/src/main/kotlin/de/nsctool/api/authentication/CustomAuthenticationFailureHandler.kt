@@ -2,13 +2,13 @@ package de.nsctool.api.authentication
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import de.nsctool.api.core.utils.TimestampUtil
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.web.authentication.AuthenticationFailureHandler
 import org.springframework.stereotype.Component
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
 
 @Component
 class CustomAuthenticationFailureHandler(
