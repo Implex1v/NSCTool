@@ -40,7 +40,7 @@ spec:
             httpGet:
               path: /actuator/health
               port: http
-          env:
+          envFrom:
             - configMapRef:
                 name: nsctool-secets
           resources:
