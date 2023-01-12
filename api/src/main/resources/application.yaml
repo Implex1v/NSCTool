@@ -11,7 +11,7 @@ spring:
   datasource:
     password: ${APP_DB_PASSWORD:password}
     username: ${APP_DB_USERNAME:sa}
-    url: ${APP_DB_URL:jdbc:h2:mem:phrasenschwein}
+    url: ${APP_DB_URL:jdbc:h2:mem:nsctool}
   h2:
     console:
       enabled: 'true'

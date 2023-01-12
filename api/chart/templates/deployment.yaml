@@ -40,6 +40,9 @@ spec:
             httpGet:
               path: /actuator/health
               port: http
+          env:
+            - configMapRef:
+                name: nsctool-secets
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

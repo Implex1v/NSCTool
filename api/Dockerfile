@@ -27,12 +27,6 @@ ARG GIT_COMMIT=unknown
 LABEL org.opencontainers.image.version="${BUILD_VERSION}"\
       org.opencontainers.image.revision="${GIT_COMMIT}"
 
-# readable during container runntime (inside and outside of container)
-ENV APP_VERSION ${BUILD_VERSION}
-ENV APP_DB_URL jdbc:postgresql://db:5432/nsctool
-ENV APP_DB_USERNAME nsctool
-ENV APP_DB_PASSWORD nsctool
-
 # exposed port
 EXPOSE 8080
 
