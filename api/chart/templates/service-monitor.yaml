@@ -1,0 +1,12 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "api.selectorLabels" . | nindent 6}}
+  endpoints:
+  - port: http
+    path: /actuator/metrics
+    interval: 15s

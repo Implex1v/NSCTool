@@ -1,0 +1,34 @@
+replicaCount: 1
+baseDomain: cloud.example.com
+
+image:
+  repository: nginx
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+imagePullSecret: pull-secret
+nameOverride: ""
+fullnameOverride: ""
+podAnnotations: {}
+
+service:
+  type: ClusterIP
+  port: 8080
+
+ingress:
+  enabled: true
+  className: "public"
+  annotations: {}
+
+resources:
+#   requests:
+#     cpu: 10m
+#     memory: 100Mi
+#   limits:
+#     cpu: 100m
+#     memory: 150Mi
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
