@@ -41,7 +41,7 @@ class DefaultKeycloakClient: KeycloakClient {
         username: String,
         email: String,
         password: String,
-        roles: List<Role>): UUID
+        roles: List<Role>): String
     {
         try {
             val userResource = client.users()
@@ -52,18 +52,16 @@ class DefaultKeycloakClient: KeycloakClient {
                 realmRoles = roles.map { it.value }
             }
 
-            val userId = userResource.create(user).let {
-                CreatedResponseUtil.getCreatedId(it).parseUUIDOrThrow()
+            return userResource.create(user).let {
+                CreatedResponseUtil.getCreatedId(it)
             }
-
-            return userId
         } catch (ex: Exception) {
             // sadly we don't know what exception is thrown on error => diaper pattern
             throw BadRequestException("Failed to register user", ex)
         }
     }
 
-    override fun resetPassword(userId: UUID, password: String, temporary: Boolean) {
+    override fun resetPassword(userId: String, password: String, temporary: Boolean) {
         try {
             val passwordReset = CredentialRepresentation().apply {
                 isTemporary = temporary
@@ -73,7 +71,7 @@ class DefaultKeycloakClient: KeycloakClient {
 
             val user = client
                 .users()
-                .get(userId.toString())
+                .get(userId)
 
             user.resetPassword(passwordReset)
         } catch (ex: Exception) {
@@ -81,17 +79,17 @@ class DefaultKeycloakClient: KeycloakClient {
         }
     }
 
-    override fun deleteUser(userId: UUID) {
+    override fun deleteUser(userId: String) {
         try {
             client
                 .users()
-                .delete(userId.toString())
+                .delete(userId)
         } catch (ex: Exception) {
             throw BadRequestException("Failed to delete user", ex)
         }
     }
 
-    override fun addRealmRoleToUser(userId: UUID, roleName: Role) {
+    override fun addRealmRoleToUser(userId: String, roleName: Role) {
         try {
             val role = client
                 .roles()
@@ -100,7 +98,7 @@ class DefaultKeycloakClient: KeycloakClient {
 
             val user = client
                 .users()
-                .get(userId.toString())
+                .get(userId)
 
             user
                 .roles()

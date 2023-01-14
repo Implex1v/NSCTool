@@ -1,34 +1,21 @@
 package de.nsctool.api.character
 
-import jakarta.persistence.ElementCollection
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.Id
-import jakarta.persistence.Table
-import org.hibernate.annotations.GenericGenerator
+import org.springframework.data.annotation.Id
+import org.springframework.data.mongodb.core.index.Indexed
+import org.springframework.data.mongodb.core.mapping.Document
 import java.util.UUID
 
-@Entity
-@Table(name = "characters")
-class Character {
+@Document
+data class Character (
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-        name = "UUID",
-        strategy = "org.hibernate.id.UUIDGenerator",
-    )
-    var id: UUID = UUID.randomUUID()
-
-    var name: String = ""
-
-    var description: String = ""
-
+    var id: String = UUID.randomUUID().toString(),
+    @Indexed
+    var name: String = "",
+    var description: String = "",
+    var race: String = "",
+    var profession: String = "",
+    @Indexed
+    var tags: List<String> = emptyList(),
+) {
     var image: ByteArray = byteArrayOf()
-
-    var race: String = ""
-
-    var profession: String = ""
-
-    @ElementCollection
-    var tags: List<String> = emptyList()
 }

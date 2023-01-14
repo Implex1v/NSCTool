@@ -30,7 +30,7 @@ fun HttpServletRequest.getUsername(): String {
     return auth.name ?: throw UnauthorizedException("User is not authenticated")
 }
 
-fun HttpServletRequest.isUser(userId: UUID) = this.getAuth().name == userId.toString()
+fun HttpServletRequest.isUser(userId: String) = this.getAuth().name == userId
 
 
 private fun HttpServletRequest.getAuth(): JwtAuthenticationToken {

@@ -4,33 +4,19 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: ${APP_KEYCLOAK_ADMIN_BASEURI:http://localhost:8180}/realms/nsctool
-  jpa:
-    show-sql: 'false'
-    hibernate:
-      ddl-auto: update
-  datasource:
-    password: ${APP_DB_PASSWORD:password}
-    username: ${APP_DB_USERNAME:sa}
-    url: ${APP_DB_URL:jdbc:h2:mem:nsctool}
-  h2:
-    console:
-      enabled: 'true'
-
-web:
-  routes:
-    auth:
-      whitelist: ${APP_WEB_ROUTES_AUTH_WHITELIST:actuator}
+  data:
+    mongodb:
+      authentication-database: ${APP_MONGO_AUTH_DATABASE:admin}
+      username: ${APP_MONGO_USERNAME:nsctool}
+      password: ${APP_MONGO_PASSWORD:nsctool}
+      database: ${APP_MONGO_DATABASE:nsctool}
+      port: ${APP_MONGO_PORT:27017}
+      host: ${APP_MONGO_HOST:localhost}
 
 server:
   error:
     whitelabel:
       enabled: 'false'
-
-springdoc:
-  swagger-ui:
-    path: /doc/swagger
-  api-docs:
-    path: /doc/openapi.json
 
 logging:
   level:
@@ -45,7 +31,7 @@ management:
     web:
       exposure:
         include:
-          - env
+          - metrics
           - health
 
 keycloak:
@@ -57,3 +43,6 @@ keycloak:
     client:
       id: ${APP_KEYCLOAK_ADMIN_CLIENT_ID:idm-client}
       secret: ${APP_KEYCLOAK_ADMIN_CLIENT_SECRET:efUD1vwp4VuVLzz999khJCIMZXV3nkMa}
+
+security:
+  enabled: ${APP_SECURITY_ENABLED:true}

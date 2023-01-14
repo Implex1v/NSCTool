@@ -21,42 +21,42 @@ class WebSecurityConfig(
     @Value("\${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
     private lateinit var issuerUrl: String
 
-    @Value("\${web.routes.auth.whitelist}")
-    private lateinit var whitelist: String
+    @Value("\${security.enabled}")
+    private lateinit var securityEnabled: String
 
+    @Bean
     fun webSecurity(http: HttpSecurity): SecurityFilterChain = http
         .sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
         .cors()
         .and()
-        .authorizeHttpRequests()
-            .requestMatchers("/actuator/**", "/doc/**", "/test", "/error", "/login", "/characters/**", "/users/**", *authWhitelist())
-            .permitAll()
-            .and()
-            .csrf()
-            .disable()
-        .authorizeHttpRequests { auth ->
-            auth.anyRequest()
-                .authenticated()
-                .and()
-                .csrf().disable()
-                .oauth2ResourceServer {
-                    it.jwt { jwt ->
-                        jwt.decoder(JwtDecoders.fromIssuerLocation(issuerUrl))
-                        jwt.jwtAuthenticationConverter(converter)
+        .let {
+            when(securityEnabled.toBooleanStrictOrNull()) {
+                false -> it
+                else -> it
+                    .authorizeHttpRequests()
+                    .requestMatchers("/actuator/**", "/test", "/error", "/login", "/characters/**", "/users/**", "/swagger-ui.html", "/v3/api-docs/")
+                    .permitAll()
+                    .and()
+                    .csrf()
+                    .disable()
+                    .authorizeHttpRequests { auth ->
+                        auth.anyRequest()
+                            .authenticated()
+                            .and()
+                            .csrf().disable()
+                        .oauth2ResourceServer {
+                            it.jwt { jwt ->
+                                jwt.decoder(JwtDecoders.fromIssuerLocation(issuerUrl))
+                                jwt.jwtAuthenticationConverter(converter)
+                            }
+                        }
                     }
-                }
+            }
         }
         .build()
 
     @Bean
     fun authenticationFailureHandler(): AuthenticationFailureHandler = authErrorHandler
-
-    private fun authWhitelist(): Array<String> {
-        return whitelist
-            .split(",")
-            .filter { it.isNotBlank() }
-            .map { "/$it/**" }.toTypedArray()
-    }
 }

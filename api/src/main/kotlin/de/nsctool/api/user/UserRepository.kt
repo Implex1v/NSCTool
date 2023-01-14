@@ -1,8 +1,9 @@
 package de.nsctool.api.user
 
-import org.springframework.data.repository.CrudRepository
-import java.util.UUID
+import org.springframework.data.mongodb.repository.MongoRepository
+import org.springframework.stereotype.Repository
 
-interface UserRepository: CrudRepository<User, UUID> {
-    fun findByUserName(username: String): User?
+@Repository
+interface UserRepository: MongoRepository<User, String> {
+    fun findByUserName(userName: String): User?
 }

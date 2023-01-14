@@ -1,9 +1,7 @@
 package de.nsctool.api.character
 
-import de.nsctool.api.core.exceptions.BadRequestException
-import de.nsctool.api.core.exceptions.NotFoundException
 import org.springframework.stereotype.Service
-import java.util.UUID
+import kotlin.jvm.optionals.getOrNull
 
 @Service
 class CharacterService(
@@ -11,20 +9,12 @@ class CharacterService(
 ) {
     fun findAll(): Iterable<Character> = repository.findAll()
 
-    fun findById(uuid: UUID): Character {
-        return repository
-            .findById(uuid)
-            .orElseThrow { NotFoundException("character not found") }
-    }
+    fun findById(id: String): Character? =
+        repository
+            .findById(id)
+            .getOrNull()
 
-    fun deleteById(uuid: UUID) {
-        repository.deleteById(uuid)
-    }
+    fun deleteById(id: String) = repository.deleteById(id)
 
-    fun create(character: Character): Character {
-        if (repository.existsById(character.id)) {
-            throw BadRequestException("character with id already exists")
-        }
-        return repository.save(character)
-    }
+    fun upsert(id: String, character: Character): Character = repository.save(character.copy(id = id))
 }

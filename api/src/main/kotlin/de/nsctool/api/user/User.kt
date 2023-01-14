@@ -1,22 +1,16 @@
 package de.nsctool.api.user
 
-import de.nsctool.api.character.Character
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.Id
-import jakarta.persistence.OneToMany
-import jakarta.persistence.Table
-import java.util.UUID
+import org.springframework.data.annotation.Id
+import org.springframework.data.mongodb.core.index.Indexed
+import org.springframework.data.mongodb.core.mapping.Document
 
-@Entity
-@Table(name = "users")
+@Document
 data class User(
     @Id
-    var id: UUID = UUID.randomUUID(),
-    @Column(unique = true)
+    var id: String,
+    @Indexed
     var userName: String,
-    @Column(unique = true)
+    @Indexed
     var email: String,
-    @OneToMany
-    var characters: List<Character> = emptyList(),
+    var characters: List<String> = emptyList(),
 )

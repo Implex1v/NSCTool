@@ -41,12 +41,13 @@ services:
       APP_DB_PASSWORD: nsctool
   
   db:
-    image: postgres:14-alpine
-    restart: unless-stopped
+    image: mongo:4
+    ports:
+      - "27017:27017"
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@implex1v.de
-      PGADMIN_DEFAULT_PASSWORD: nsctool
-      POSTGRES_DB: nsctool
+      MONGO_INITDB_ROOT_USERNAME: nsctool
+      MONGO_INITDB_ROOT_PASSWORD: nsctool
+      MONGO_INITDB_DATABASE: nsctool
 
   keycloak:
     image: quay.io/keycloak/keycloak:18.0

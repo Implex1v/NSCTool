@@ -1,14 +1,12 @@
 package de.nsctool.api.character
 
-import org.springframework.data.jpa.repository.Query
-import org.springframework.data.repository.CrudRepository
-import java.util.UUID
+import org.springframework.data.mongodb.repository.MongoRepository
+import org.springframework.stereotype.Repository
 
-interface CharacterRepository: CrudRepository<Character, UUID> {
+@Repository
+interface CharacterRepository: MongoRepository<Character, String> {
     fun findByName(name: String): List<Character>
     fun findByRace(race: String): List<Character>
     fun findByProfession(profession: String): List<Character>
-
-    @Query("SELECT c FROM Character c WHERE :tag in c.tags")
-    fun findByTag(tag: String): List<Character>
+    fun findByTagsContains(tag: String): List<Character>
 }

@@ -1,0 +1,4 @@
+# override values here
+security:
+  # disabled for local development
+  enabled: false

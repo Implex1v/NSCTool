@@ -42,7 +42,7 @@ spec:
               port: http
           envFrom:
             - configMapRef:
-                name: nsctool-secets
+                name: nsctool-secrets
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
