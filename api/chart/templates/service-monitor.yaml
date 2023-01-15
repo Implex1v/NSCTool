@@ -8,5 +8,5 @@ spec:
       {{- include "api.selectorLabels" . | nindent 6}}
   endpoints:
   - port: http
-    path: /actuator/metrics
+    path: /actuator/prometheus
     interval: 15s
