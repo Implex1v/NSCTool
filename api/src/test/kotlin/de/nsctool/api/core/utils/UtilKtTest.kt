@@ -51,12 +51,12 @@ internal class UtilKtTest {
     @Test
     fun `isUser() should return if given user is current user`() {
         every { request.userPrincipal } returns auth
-        val user = UUID.randomUUID()
+        val user = UUID.randomUUID().toString()
         every { auth.name } returns user.toString()
 
         request.isUser(user) shouldBe true
 
-        request.isUser(UUID.randomUUID()) shouldBe false
+        request.isUser(UUID.randomUUID().toString()) shouldBe false
     }
 
     @Test

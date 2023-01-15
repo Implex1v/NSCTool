@@ -18,10 +18,10 @@ internal class UserControllerTest {
     private val service = mockk<UserService>()
     private val controller = UserController(service)
     private val user = UserController.CreateUserRequest("user", "user@example.com", "123456")
-    private val entity = User(userName = user.username, email = user.email, id = UUID.randomUUID())
+    private val entity = User(userName = user.username, email = user.email, id = UUID.randomUUID().toString())
     private val request = spyk<HttpServletRequest>()
     private val auth = mockk<JwtAuthenticationToken>()
-    private val uuid = UUID.randomUUID()
+    private val uuid = UUID.randomUUID().toString()
 
     @Test
     fun `should create user`() {
@@ -51,16 +51,16 @@ internal class UserControllerTest {
         every { request.userPrincipal } returns auth
         every { auth.name } returns "foo"
 
-        shouldThrowExactly<UnauthorizedException> { controller.delete(request, uuid.toString()) }
+        shouldThrowExactly<UnauthorizedException> { controller.delete(request, uuid) }
 
         every { auth.authorities } returns listOf(SimpleGrantedAuthority(Role.USER.value))
-        shouldThrowExactly<UnauthorizedException> { controller.delete(request, uuid.toString()) }
+        shouldThrowExactly<UnauthorizedException> { controller.delete(request, uuid) }
 
         every { auth.authorities } returns listOf(SimpleGrantedAuthority(Role.ADMIN.value))
         justRun { service.delete(uuid) }
-        controller.delete(request, uuid.toString())
+        controller.delete(request, uuid)
 
         every { service.delete(uuid) } throws EmptyResultDataAccessException(5)
-        shouldThrowExactly<EmptyResultDataAccessException> { controller.delete(request, uuid.toString()) }
+        shouldThrowExactly<EmptyResultDataAccessException> { controller.delete(request, uuid) }
     }
 }

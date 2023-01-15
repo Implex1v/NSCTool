@@ -20,7 +20,7 @@ val jwtVersion = "0.11.5"
 val mockkVersion = "1.12.3"
 val kotestVersion = "5.1.0"
 val springMockVersion = "3.1.1"
-val keycloakAdminClientVersion = "18.0.0"
+val keycloakAdminClientVersion = "20.0.3"
 val springDocVersion = "1.6.14"
 
 dependencies {

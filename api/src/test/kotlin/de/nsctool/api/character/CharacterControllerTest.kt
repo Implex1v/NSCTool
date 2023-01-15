@@ -19,7 +19,7 @@ class CharacterControllerTest (
     private val chars = listOf(
         Character(), Character()
     )
-    private val uuid = UUID.randomUUID()
+    private val uuid = UUID.randomUUID().toString()
 
     @Test
     fun `should get all Characters`() {
@@ -34,27 +34,23 @@ class CharacterControllerTest (
 
     @Test
     fun `should get a character by it's id`() {
-        shouldThrowExactly<BadRequestException> { controller.getById("NotAUUID") }
-
         every { service.findById(uuid) } returns chars[0]
-        controller.getById(uuid.toString()) shouldBe chars[0]
+        controller.getById(uuid) shouldBe chars[0]
 
         every { service.findById(uuid) } throws(NotFoundException("Foo"))
-        shouldThrowExactly<NotFoundException> { controller.getById(uuid.toString()) }
+        shouldThrowExactly<NotFoundException> { controller.getById(uuid) }
     }
 
     @Test
     fun `should delete character by id`() {
-        shouldThrowExactly<BadRequestException> { controller.delete("NotAUUID") }
-
         justRun { service.deleteById(uuid) }
-        controller.delete(uuid.toString())
+        controller.delete(uuid)
         verify { service.deleteById(uuid) }
     }
 
     @Test
     fun `should add character`() {
-        every { service.create(chars[0]) } returns chars[0]
-        controller.create(chars[0]) shouldBe chars[0]
+        every { service.upsert("", chars[0]) } returns chars[0]
+        controller.upsert("", chars[0]) shouldBe chars[0]
     }
 }

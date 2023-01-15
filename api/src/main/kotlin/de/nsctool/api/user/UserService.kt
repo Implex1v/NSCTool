@@ -2,13 +2,9 @@ package de.nsctool.api.user
 
 import de.nsctool.api.authentication.keycloak.KeycloakClient
 import de.nsctool.api.authentication.keycloak.Role
-import de.nsctool.api.core.exceptions.BadRequestException
 import de.nsctool.api.core.exceptions.InternalServerErrorException
-import de.nsctool.api.core.exceptions.NotFoundException
 import org.slf4j.LoggerFactory
-import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Service
-import java.util.UUID
 
 @Service
 class UserService(
@@ -22,7 +18,6 @@ class UserService(
             val userId = client.createUser(
                 username = user.userName,
                 email = user.email,
-                password = password,
                 roles = listOf(Role.USER)
             )
 
@@ -30,14 +25,13 @@ class UserService(
             client.addRealmRoleToUser(userId = userId, roleName = Role.USER)
             logger.info("Created user '$userId' ('${user.userName}')")
             return user.copy(
-                id = userId.toString(),
+                id = userId,
                 userName = user.userName,
                 email = user.email,
             ).let {
                 repository.save(it)
             }
         } catch (ex: Exception) {
-            logger.error("Failed to create user", ex)
             throw InternalServerErrorException("Failed to create user", ex)
         }
     }

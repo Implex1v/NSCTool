@@ -1,18 +1,21 @@
 package de.nsctool.api.authentication.keycloak
 
 import de.nsctool.api.core.exceptions.BadRequestException
-import de.nsctool.api.core.controller.parseUUIDOrThrow
 import org.keycloak.admin.client.CreatedResponseUtil
 import org.keycloak.admin.client.Keycloak
 import org.keycloak.admin.client.resource.RealmResource
 import org.keycloak.representations.idm.CredentialRepresentation
 import org.keycloak.representations.idm.UserRepresentation
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import java.util.*
+import javax.ws.rs.ClientErrorException
 
 @Component
 class DefaultKeycloakClient: KeycloakClient {
+    private val logger by lazy { LoggerFactory.getLogger(DefaultKeycloakClient::class.java) }
+
     @Value("\${keycloak.admin.baseUri}")
     private lateinit var baseUri: String
 
@@ -40,16 +43,15 @@ class DefaultKeycloakClient: KeycloakClient {
     override fun createUser(
         username: String,
         email: String,
-        password: String,
-        roles: List<Role>): String
-    {
+        roles: List<Role>,
+    ): String {
         try {
             val userResource = client.users()
             val user = UserRepresentation().apply {
                 isEnabled = true
                 setUsername(username)
                 setEmail(email)
-                realmRoles = roles.map { it.value }
+                realmRoles = roles.map { it.idpRole() }
             }
 
             return userResource.create(user).let {
@@ -104,7 +106,8 @@ class DefaultKeycloakClient: KeycloakClient {
                 .roles()
                 .realmLevel()
                 .add(listOf(role))
-        } catch (ex: Exception)  {
+        } catch (ex: ClientErrorException)  {
+            logger.error("Failed to add user '$userId' to role '${roleName.idpRole()}': '${ex.response.readEntity(String::class.java)}'")
             throw BadRequestException("Failed to add user '$userId' to role '$roleName'", ex)
         }
     }
