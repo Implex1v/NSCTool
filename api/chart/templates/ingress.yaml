@@ -15,7 +15,7 @@ metadata:
     {{- include "api.labels" . | nindent 4 }}
   annotations:
     nginx.ingress.kubernetes.io/server-snippet: |
-      location ~* "^/metrics" {
+      location ~* "^/actuator" {
           deny all;
           return 404;
       }
