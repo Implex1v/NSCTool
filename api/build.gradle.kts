@@ -43,11 +43,12 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("io.jsonwebtoken:jjwt-api:$jwtVersion")
 	implementation("org.keycloak:keycloak-admin-client:$keycloakAdminClientVersion")
+	implementation("io.micrometer:micrometer-registry-prometheus:1.10.3")
 
 	runtimeOnly("io.jsonwebtoken:jjwt-impl:$jwtVersion")
 	runtimeOnly("io.jsonwebtoken:jjwt-jackson:$jwtVersion")
 
-	testImplementation("com.tngtech.archunit:archunit-junit5:1.0.0-rc1")
+	testImplementation("com.tngtech.archunit:archunit-junit5:1.0.0")
 	testImplementation("io.mockk:mockk:$mockkVersion")
 	testImplementation("com.ninja-squad:springmockk:$springMockVersion")
 	testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")

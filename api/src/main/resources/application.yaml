@@ -12,6 +12,7 @@ spring:
       database: ${APP_MONGO_DATABASE:nsctool}
       port: ${APP_MONGO_PORT:27017}
       host: ${APP_MONGO_HOST:localhost}
+      auto-index-creation: true
 
 server:
   error:
@@ -31,7 +32,7 @@ management:
     web:
       exposure:
         include:
-          - metrics
+          - prometheus
           - health
 
 keycloak:
