@@ -13,8 +13,12 @@ spring:
       port: ${APP_MONGO_PORT:27017}
       host: ${APP_MONGO_HOST:localhost}
       auto-index-creation: true
+  sleuth:
+    otel:
+      exporter:
+        otlp:
+          endpoint: tempo.observability.svc.cluster.local:4317
 
-server:
   error:
     whitelabel:
       enabled: 'false'
