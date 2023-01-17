@@ -29,13 +29,13 @@ spec:
               containerPort: 8080
               protocol: TCP
           livenessProbe:
-            initialDelaySeconds: 15
+            initialDelaySeconds: 30
             periodSeconds: 5
             httpGet:
               path: /actuator/health
               port: http
           readinessProbe:
-            initialDelaySeconds: 15
+            initialDelaySeconds: 30
             periodSeconds: 5
             httpGet:
               path: /actuator/health
