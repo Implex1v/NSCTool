@@ -16,25 +16,28 @@ spring:
       port: ${APP_MONGO_PORT:27017}
       host: ${APP_MONGO_HOST:localhost}
       auto-index-creation: true
-  sleuth:
-    otel:
-      exporter:
-        otlp:
-          endpoint: http://tempo.observability.svc.cluster.local:4317
 
   error:
     whitelabel:
       enabled: 'false'
 
 logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
   level:
     org:
-      springframework:
-        web:
-          client:
-            RestTemplate: INFO
+#      springframework:
+# Comment in for http client debug
+#        web:
+#          client:
+#            RestTemplate: DEBUG
+      opentelemetry: DEBUG
 
 management:
+  tracing:
+    sampling:
+      probability: 1.0
+
   endpoints:
     web:
       exposure:

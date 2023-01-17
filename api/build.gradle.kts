@@ -28,9 +28,7 @@ val grpcVersion = "1.52.1"
 val otelExporterVersion = "1.22.0"
 
 dependencies {
-	platform("org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion")
-	platform("spring-cloud-sleuth-otel-dependencies:$springCloudSleuthVersion")
-
+	implementation(platform("io.micrometer:micrometer-tracing-bom:1.0.1"))
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
 	implementation("org.springframework.boot:spring-boot-starter-security")
@@ -45,12 +43,10 @@ dependencies {
 //	implementation("org.springframework.security:spring-security-oauth2-resource-server")
 	implementation("org.springdoc:springdoc-openapi-ui:$springDocVersion")
 	implementation("org.springdoc:springdoc-openapi-kotlin:$springDocVersion")
-	implementation("org.springframework.cloud:spring-cloud-starter-sleuth:3.1.3") {
-		exclude("org.springframework.cloud", "spring-cloud-sleuth-brave")
-	}
-	implementation("org.springframework.cloud:spring-cloud-sleuth-otel-autoconfigure:1.1.0")
-	implementation("io.grpc:grpc-netty-shaded:$grpcVersion")
-	implementation("io.opentelemetry:opentelemetry-exporter-otlp:$otelExporterVersion")
+	// see https://micrometer.io/docs/tracing
+	implementation("io.micrometer:micrometer-tracing")
+	implementation("io.micrometer:micrometer-tracing-bridge-otel")
+	implementation("io.opentelemetry:opentelemetry-exporter-zipkin")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")

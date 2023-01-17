@@ -1,6 +1,7 @@
 package de.nsctool.api.character
 
 import de.nsctool.api.core.controller.parseUUIDOrThrow
+import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatusCode
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -20,7 +21,10 @@ class CharacterController(
     private val service: CharacterService
 ) {
     @GetMapping()
-    fun getAll(): Iterable<Character> = service.findAll()
+    fun getAll(): Iterable<Character>{
+        LoggerFactory.getLogger(this::class.java).warn("Test")
+        return service.findAll()
+    }
 
     @GetMapping("/{uuid}")
     fun getById(@PathVariable uuid: String): Character =
