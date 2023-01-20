@@ -43,6 +43,9 @@ spec:
           envFrom:
             - configMapRef:
                 name: nsctool-secrets
+          env:
+            - name: APP_TRACING_HOST
+              value: http://tempo.observability.svc.cluster.local:4318
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

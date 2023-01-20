@@ -1,6 +1,6 @@
 spring:
   application:
-    name: api-nsctool
+    name: ${APP_NAME:nsctool-api}
 
   security:
     oauth2:
@@ -57,3 +57,6 @@ keycloak:
 
 security:
   enabled: ${APP_SECURITY_ENABLED:true}
+
+tracing:
+  host: ${APP_TRACING_HOST:http://localhost:4318}
