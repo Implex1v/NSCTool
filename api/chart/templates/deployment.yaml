@@ -44,8 +44,18 @@ spec:
             - configMapRef:
                 name: nsctool-secrets
           env:
-            - name: APP_TRACING_HOST
-              value: http://tempo.observability.svc.cluster.local:4318
+            - name: OTEL_TRACES_EXPORTER
+              value: otlp
+            - name: OTEL_METRICS_EXPORTER
+              value: none
+            - name: OTEL_LOGS_EXPORTER
+              value: none
+            - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+              value: http://tempo.observability.svc.cluster.local:4318/v1/traces
+            - name: OTEL_EXPORTER_OTLP_TRACES_PROTOCOL
+              value: http/protobuf
+            - name: OTEL_RESOURCE_ATTRIBUTES
+              value: service.name=nsctool-api
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

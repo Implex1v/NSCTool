@@ -32,5 +32,6 @@ EXPOSE 8080
 
 # copy from build container (not outside of docker)
 COPY --from=build /app/build/libs/api-*.jar /app/api.jar
+COPY --from=build /app/build/agent/opentelemetry-javaagent-*.jar /app/otelagent.jar
 # executes this command (the main command of this docker, only one command!)
-CMD ["java", "-jar", "/app/api.jar"]
+CMD ["java", "-javaagent:/app/otelagent.jar", "-jar", "/app/api.jar"]
