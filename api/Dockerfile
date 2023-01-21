@@ -16,7 +16,7 @@ RUN ./gradlew build --stacktrace
 
 
 # initialize productive container (this is the result of the build)
-FROM openjdk:17-slim AS release
+FROM openjdk:17-bullseye AS release
 WORKDIR /app
 
 # important for container management
