@@ -1,5 +1,5 @@
 #!/bin/sh
-export OTEL_EXPORTER_OTLP_ENDPOINT=${OTEL_EXPORTER_OTLP_ENDPOINT:-http://tempo.observability.svc.cluster.local:4318/v1/traces}
+export OTEL_EXPORTER_OTLP_ENDPOINT=${OTEL_EXPORTER_OTLP_ENDPOINT:-http://tempo.observability.svc.cluster.local:4318}
 env
 java -javaagent:/app/otelagent.jar \
   -Dotel.resource.attributes=service.name=nsctool-api-agent \
