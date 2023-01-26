@@ -21,17 +21,14 @@ spring:
     whitelabel:
       enabled: 'false'
 
-logging:
-  pattern:
-    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
-  level:
-    org:
+#logging:
+#  level:
+#    org:
 #      springframework:
-# Comment in for http client debug
+#        # Comment in for http client debug
 #        web:
 #          client:
 #            RestTemplate: DEBUG
-      opentelemetry: DEBUG
 
 management:
   tracing:
@@ -57,6 +54,3 @@ keycloak:
 
 security:
   enabled: ${APP_SECURITY_ENABLED:true}
-
-tracing:
-  host: ${APP_TRACING_HOST:http://localhost:4318}

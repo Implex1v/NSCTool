@@ -7,5 +7,5 @@ java -javaagent:/app/otelagent.jar \
   -Dotel.exporter.otlp.protocol=http/protobuf \
   -Dotel.metrics.exporter=none \
   -Dotel.logs.exporter=none \
-  -Dotel.exporter.otlp.traces.endpoint=$OTEL_EXPORTER_OTLP_ENDPOINT \
+  -Dotel.exporter.otlp.traces.endpoint=$OTEL_EXPORTER_OTLP_ENDPOINT/v1/traces \
   -jar /app/api.jar

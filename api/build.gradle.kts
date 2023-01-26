@@ -40,10 +40,6 @@ dependencies {
 	implementation("org.springframework.data:spring-data-mongodb")
 	implementation("org.springdoc:springdoc-openapi-ui:$springDocVersion")
 	implementation("org.springdoc:springdoc-openapi-kotlin:$springDocVersion")
-	// see https://micrometer.io/docs/tracing
-	implementation("io.micrometer:micrometer-tracing")
-	implementation("io.micrometer:micrometer-tracing-bridge-otel")
-	implementation("io.opentelemetry:opentelemetry-exporter-otlp")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
