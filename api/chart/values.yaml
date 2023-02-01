@@ -10,7 +10,8 @@ image:
 imagePullSecret: pull-secret
 nameOverride: ""
 fullnameOverride: ""
-podAnnotations: {}
+podAnnotations:
+  instrumentation.opentelemetry.io/inject-java: 'true'
 
 service:
   type: ClusterIP

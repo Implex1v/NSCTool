@@ -47,8 +47,6 @@ dependencies {
 	implementation("org.keycloak:keycloak-admin-client:$keycloakAdminClientVersion")
 	implementation("io.micrometer:micrometer-registry-prometheus:1.10.3")
 
-	compileOnly("io.opentelemetry.javaagent:opentelemetry-javaagent:1.22.1")
-
 	runtimeOnly("io.jsonwebtoken:jjwt-impl:$jwtVersion")
 	runtimeOnly("io.jsonwebtoken:jjwt-jackson:$jwtVersion")
 
@@ -59,17 +57,6 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")
 }
-
-tasks.register<Copy>("copyAgent") {
-	shouldRunAfter("build")
-	println("copying")
-	val file = configurations.compileClasspath.get().filter { it.name.startsWith("opentelemetry-javaagent") }
-	from(file)
-	into("$buildDir/agent")
-
-}.get()
-
-tasks.named("build") { finalizedBy("copyAgent") }
 
 tasks.withType<KotlinCompile> {
 	kotlinOptions {

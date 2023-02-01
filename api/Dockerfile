@@ -32,7 +32,6 @@ EXPOSE 8080
 
 # copy from build container (not outside of docker)
 COPY --from=build /app/build/libs/api-*.jar /app/api.jar
-COPY --from=build /app/build/agent/opentelemetry-javaagent-*.jar /app/otelagent.jar
 COPY --from=build /app/entrypoint.sh /app/entrypoint.sh
 # executes this command (the main command of this docker, only one command!)
 CMD "/app/entrypoint.sh"

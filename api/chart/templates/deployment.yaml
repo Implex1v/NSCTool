@@ -45,20 +45,8 @@ spec:
                 name: nsctool-secrets
           env:
             # https://github.com/open-telemetry/opentelemetry-java/blob/main/sdk-extensions/autoconfigure/README.md#otlp-exporter-span-metric-and-log-exporters
-            - name: OTEL_TRACES_EXPORTER
-              value: otlp
             - name: OTEL_METRICS_EXPORTER
               value: none
-            - name: OTEL_LOGS_EXPORTER
-              value: none
-#            - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
-#              value: http://tempo.observability.svc.cluster.local:4318/v1/traces
-            - name: OTEL_EXPORTER_OTLP_ENDPOINT
-              value: http://tempo.observability.svc.cluster.local:4318
-            - name: OTEL_EXPORTER_OTLP_TRACES_PROTOCOL
-              value: http/protobuf
-            - name: OTEL_RESOURCE_ATTRIBUTES
-              value: service.name=nsctool-api
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
