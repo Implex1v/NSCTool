@@ -21,6 +21,14 @@ spring:
     whitelabel:
       enabled: 'false'
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - prometheus
+          - health
+
 #logging:
 #  level:
 #    org:
@@ -32,13 +40,6 @@ spring:
 logging:
   pattern:
     level: trace_id=%mdc{trace_id} span_id=%mdc{span_id} trace_flags=%mdc{trace_flags} %5p
-
-  endpoints:
-    web:
-      exposure:
-        include:
-          - prometheus
-          - health
 
 keycloak:
   admin:

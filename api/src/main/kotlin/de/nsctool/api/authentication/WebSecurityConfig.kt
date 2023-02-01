@@ -36,7 +36,7 @@ class WebSecurityConfig(
                 false -> it
                 else -> it
                     .authorizeHttpRequests()
-                    .requestMatchers("/actuator/**", "/test", "/error", "/login", "/characters/**", "/users/**", "/swagger-ui.html", "/v3/api-docs/")
+                    .requestMatchers("/actuator/**", "/test", "/error", "/login", "/swagger-ui.html", "/v3/api-docs/")
                     .permitAll()
                     .and()
                     .csrf()

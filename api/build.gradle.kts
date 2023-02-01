@@ -28,7 +28,6 @@ val grpcVersion = "1.52.1"
 val otelExporterVersion = "1.22.0"
 
 dependencies {
-	implementation(platform("io.micrometer:micrometer-tracing-bom:1.0.1"))
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
 	implementation("org.springframework.boot:spring-boot-starter-security")
@@ -43,10 +42,10 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-	implementation("io.jsonwebtoken:jjwt-api:$jwtVersion")
 	implementation("org.keycloak:keycloak-admin-client:$keycloakAdminClientVersion")
 	implementation("io.micrometer:micrometer-registry-prometheus:1.10.3")
 
+	implementation("io.jsonwebtoken:jjwt-api:$jwtVersion")
 	runtimeOnly("io.jsonwebtoken:jjwt-impl:$jwtVersion")
 	runtimeOnly("io.jsonwebtoken:jjwt-jackson:$jwtVersion")
 
