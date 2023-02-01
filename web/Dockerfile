@@ -27,6 +27,7 @@ RUN adduser --system --uid 1001 nextjs
 
 COPY --from=build /app/public ./public
 COPY --from=build /app/package.json ./package.json
+COPY --from=build /app/entrypoint.sh ./
 
 COPY --from=build --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=build --chown=nextjs:nodejs /app/.next/static ./.next/static
@@ -41,4 +42,4 @@ ENV NEXTAUTH_SECRET unset
 ENV APP_AUTH_CLIENT_ID unset
 ENV APP_AUTH_CLIENT_SECRET unset
 
-CMD ["node", "server.js"]
+CMD ["./entrypoint.sh"]

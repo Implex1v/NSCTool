@@ -1,0 +1,6 @@
+apiVersion: v2
+name: ui
+description: Helm chart for the UI of NSCTool
+type: application
+version: 0.1.0
+appVersion: "1.16.0"
